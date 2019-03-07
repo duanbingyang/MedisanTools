@@ -13,6 +13,7 @@ import moment from 'moment';
 import distData from '../../../../components/DistPickerData/distPickerData'
 moment().format();
 const { Row, Col } = Grid;
+const rootUrl = 'http://172.16.11.17:3000'
 
 
 export default class ColumnForm extends Component {
@@ -137,7 +138,7 @@ export default class ColumnForm extends Component {
             }else{
                 // 提交当前填写的数据
                 axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-                axios.post(`http://localhost:3000/api/adddetail`, qs.stringify(data))
+                axios.post(`${rootUrl}/api/adddetail`, qs.stringify(data))
                 .then(res=>{
                     console.log('res=>',res);            
                 })
@@ -165,7 +166,7 @@ export default class ColumnForm extends Component {
 
     onSearch = (info) => {
         const _this = this;
-        axios.get(`http://localhost:3000/api/getlist`, {
+        axios.get(`${rootUrl}/api/getlist`, {
             params: {
                 pageno: 1,
                 pagesize: 10,
@@ -207,7 +208,7 @@ export default class ColumnForm extends Component {
                 <IceContainer>
                     <Upload
                         listType="text"
-                        action="http://127.0.0.1:3000/api/uploadfile" // 该接口仅作测试使用，业务请勿使用
+                        action={`${rootUrl}/api/uploadfile`} // 该接口仅作测试使用，业务请勿使用
                         accept="*"
                         // accept="image/png, image/jpg, image/jpeg, image/gif, image/bmp"
                         data={{ token: "abcd" }}

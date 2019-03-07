@@ -3,7 +3,7 @@ const mysql = require('mysql');
 mysqlConnection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '123456',
+    password: '',
     port : 3306,
     database : 'exceltools'
 })
@@ -11,7 +11,7 @@ mysqlConnection = mysql.createConnection({
 const mysqlPool = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    password: '123456',
+    password: '',
     port : 3306,
     database : 'exceltools'
 })
