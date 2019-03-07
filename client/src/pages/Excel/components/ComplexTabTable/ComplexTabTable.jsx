@@ -15,6 +15,7 @@ import SubCategoryItem from './SubCategoryItem';
 import data from './data';
 import axios from 'axios';
 import './ComplexTabTable.scss';
+const rootUrl = 'http://172.16.11.17:3000'
 const CancelToken = axios.CancelToken;
 const source = CancelToken.source();
 
@@ -104,7 +105,7 @@ export default class ComplexTabTable extends Component {
 
     componentDidMount() {
         const _this = this;
-        axios.get('http://localhost:3000/api/getlist?pageno=1&&pagesize=10&&count=1')
+        axios.get(`${rootUrl}/api/getlist?pageno=1&&pagesize=10&&count=1`)
             .then(function (response) {
                 _this.setState({
                     viewlist: response.data.file,
@@ -300,7 +301,7 @@ export default class ComplexTabTable extends Component {
     onSearch = (info) => {
         console.log(info)
         const _this = this;
-        axios.get(`http://localhost:3000/api/getlist?pageno=1&&pagesize=10&&count=1&&key="company"&&selectval=${info}`)
+        axios.get(`${rootUrl}/api/getlist?pageno=1&&pagesize=10&&count=1&&key="company"&&selectval=${info}`)
             .then(function (response) {
                 _this.setState({
                     viewlist: response.data.file,
@@ -339,7 +340,7 @@ export default class ComplexTabTable extends Component {
 
     handleChange = (pageno) => {
         const _this = this;
-        let api = 'http://localhost:3000/api/getlist?pageno=' + pageno + '&&pagesize=10'
+        let api = `${rootUrl}/api/getlist?pageno=${pageno}&&pagesize=10`
         if(this.state.search){
             api = api + `&&count=1&&key="company"&&selectval=${this.state.search}`
         }
@@ -366,7 +367,7 @@ export default class ComplexTabTable extends Component {
                 <IceContainer>
                     <Upload
                         listType="text"
-                        action="http://localhost:3000/api/uploadfile" // 该接口仅作测试使用，业务请勿使用
+                        action={`${rootUrl}/api/uploadfile`} // 该接口仅作测试使用，业务请勿使用
                         accept="*"
                         // accept="image/png, image/jpg, image/jpeg, image/gif, image/bmp"
                         data={{ token: "abcd" }}

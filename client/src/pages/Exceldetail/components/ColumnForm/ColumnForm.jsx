@@ -11,6 +11,7 @@ import axios from 'axios';
 import moment from 'moment';
 import distData from '../../../../components/DistPickerData/distPickerData'
 moment().format();
+const rootUrl = 'http://172.16.11.17:3000'
 const { Row, Col } = Grid;
 
 
@@ -101,7 +102,7 @@ export default class ColumnForm extends Component {
     resetDetail = (ctx) => {
         const _this = this;
         const id = this.props.location.search
-        axios.get('http://localhost:3000/api/detail' + id)
+        axios.get(`${rootUrl}/api/detail` + id)
             .then(function (response) {
                 const res = response.data.file
                 const timeKey = ['businessLicenseValidDate', 'licenseValidDate', 'GSPLicenseValidDate', 'medisanPurchaseValidDate', 'lxMedisanPurchaseValidDate', 'recordDate']
@@ -170,7 +171,7 @@ export default class ColumnForm extends Component {
 
     onSearch = (info) => {
         const _this = this;
-        axios.get(`http://localhost:3000/api/getlist?pageno=1&&pagesize=10&&count=1&&key="company"&&selectval=${info}`)
+        axios.get(`${rootUrl}/api/getlist?pageno=1&&pagesize=10&&count=1&&key="company"&&selectval=${info}`)
             .then(function (response) {
                 _this.setState({
                     viewlist: response.data.file,
@@ -204,7 +205,7 @@ export default class ColumnForm extends Component {
                 <IceContainer>
                     <Upload
                         listType="text"
-                        action="http://127.0.0.1:3000/api/uploadfile" // 该接口仅作测试使用，业务请勿使用
+                        action={`${rootUrl}/api/uploadfile`} // 该接口仅作测试使用，业务请勿使用
                         accept="*"
                         // accept="image/png, image/jpg, image/jpeg, image/gif, image/bmp"
                         data={{ token: "abcd" }}
