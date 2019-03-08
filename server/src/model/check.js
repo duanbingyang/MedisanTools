@@ -6,7 +6,6 @@ class checkModel {
         const thListEN = {
             "editor": "录入人编号",
             "province": "省份",
-            "qualified": "是否合格",
             "company": "公司名称",
             "legalPersonName": "法人",
             "registeredCapital": "注册资金",
@@ -24,8 +23,6 @@ class checkModel {
             "sealImpression": "印章印模",
             "recordDate": "整理时间",
             "positionId": "位置",
-            "nowDate": "日期",
-            "checkTrue": "条件"
         }
         const thListCH  = {
             "GSP证书有效期": "GSPLicenseValidDate",
@@ -39,9 +36,6 @@ class checkModel {
             "录入人编号": "editor",
             "收货委托": "receivingEntrusted",
             "整理时间": "recordDate",
-            "日期": "nowDate",
-            "是否合格": "qualified",
-            "条件": "checkTrue",
             "法人": "legalPersonName",
             "注册资金": "registeredCapital",
             "省份": "province",
