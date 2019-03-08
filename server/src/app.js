@@ -18,17 +18,18 @@ require('./router')(router);
 
 app
     .use(logger())
-    .use(cors())
-    .use(bodyParser())
-    .use(helmet())
-    .use(respond())
-    .use(router.routes())
     .use(koaBody({
         multipart: true,
         formidable: {
-            maxFileSize: 400*1024*1024    // 设置上传文件大小最大限制，默认2M
+            maxFileSize: 4000*1024*1024    // 设置上传文件大小最大限制，默认2M
         }
     }))
+    .use(cors({
+        credentials: true
+    }))
+    .use(helmet())
+    .use(respond())
+    .use(router.routes())
     .use(router.allowedMethods())
     .use(serve(path.join(process.cwd(), 'build')))
     .listen(port, () => {

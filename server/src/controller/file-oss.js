@@ -8,7 +8,6 @@ const config = require('../config/config-sql')
 class FileController {
 
     async fileUploadapi(ctx) {
-       
         const localFile = ctx.request.files.file.path;
         const key = ctx.request.files.file.name;
         // 上传文件至阿里私有OSS

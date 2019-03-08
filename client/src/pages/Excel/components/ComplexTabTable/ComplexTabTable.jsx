@@ -15,7 +15,7 @@ import SubCategoryItem from './SubCategoryItem';
 import data from './data';
 import axios from 'axios';
 import './ComplexTabTable.scss';
-const rootUrl = 'http://172.16.11.17:3000'
+const rootUrl = 'http://localhost:3000'
 const CancelToken = axios.CancelToken;
 const source = CancelToken.source();
 
@@ -376,23 +376,7 @@ export default class ComplexTabTable extends Component {
                         onSuccess={this.onSuccess}
                         onRemove={this.onRemove}
                         onError={this.onError}
-                        headers={{
-                            "Access-Control-Allow-Methods" : "GET,POST,PUT,DELETE,OPTIONS",
-                            "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, access-control-allow-methods"
-                        }}
-                        defaultValue={[
-                            {
-                                name: "IMG.png",
-                                status: "done",
-                                size: 1024,
-                                downloadURL:
-                                    "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
-                                fileURL:
-                                    "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg",
-                                imgURL:
-                                    "https://img.alicdn.com/tps/TB19O79MVXXXXcZXVXXXXXXXXXX-1024-1024.jpg"
-                            }
-                        ]}
+                        defaultValue={[]}
                     >
                         <Button type="primary" style={{ margin: "0 0 10px" }}>
                             上传文件
