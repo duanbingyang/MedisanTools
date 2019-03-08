@@ -71,15 +71,21 @@ class MysqlService {
             18: true,
             20: true
         }
+        let uselessData = []
 
 
         for (let i = 0; i < data.length; i++) {
             let sqlDatali = '0,'
+            let tableLi = data[i]
             for (let j = 0; j < data[i].length; j++) {
                 let item = data[i][j]
                 if (i == 0) {
                     item = checkModel.changeTh(item, 'CH')
-                    th = th + item + ','
+                    if(item){
+                        th = th + item + ','
+                    }else{
+                        uselessData.push(j)
+                    }
                 } else {
                     if (dateList[j]) {
                         item = checkModel.timeExcelToTimeUnix(item)
@@ -92,9 +98,13 @@ class MysqlService {
                         item = checkModel.changeWan(item)
                     }
                     
-                    item = checkModel.changeMark(item)
-                    item = checkModel.checkString(item) ? '"' + item.replace(/(^\s*)|(\s*$)/g, "") + '"' : item
-                    sqlDatali = sqlDatali + item + ','
+                    if(uselessData.indexOf(j) != -1){
+                        console.log('--> 此行为多余数据，在导入过程中自动忽略，如果有误删请在model/check.js中的thListCH对象添加相应数据')
+                    }else{
+                        item = checkModel.changeMark(item)
+                        item = checkModel.checkString(item) ? '"' + item.replace(/(^\s*)|(\s*$)/g, "") + '"' : item
+                        sqlDatali = sqlDatali + item + ','
+                    }
                 }
             }
             sqlData = sqlData + '(' + sqlDatali.slice(0, sqlDatali.length - 1) + ')' + ','
@@ -120,7 +130,6 @@ class MysqlService {
     async insert(obj) {
         const {count, sql, countSql} = obj
         const cbData = await getMysqlPoolData(sql)
-        console.log(cbData, '===========================================')
         return cbData
     }
 

@@ -60,7 +60,6 @@ class FileController {
             count: count,
             countSql: countSql
         })
-        console.log(result)
         ctx.body = {
             code: 0,
             msg: '获取成功',
@@ -83,7 +82,6 @@ class FileController {
             count: count,
             countSql: countSql
         })
-        console.log(result)
         ctx.body = {
             code: 0,
             msg: '获取成功',
@@ -98,7 +96,6 @@ class FileController {
         const result = await mysqlservice.find({
             sql: sql
         })
-
         const resultData = result[0][0]
 
         ctx.body = {

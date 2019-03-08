@@ -12,6 +12,7 @@ import moment from 'moment';
 import distData from '../../../../components/DistPickerData/distPickerData'
 moment().format();
 const rootUrl = 'http://172.16.11.17:3000'
+// const rootUrl = 'http://localhost:3000'
 const { Row, Col } = Grid;
 
 
@@ -102,7 +103,7 @@ export default class ColumnForm extends Component {
     resetDetail = (ctx) => {
         const _this = this;
         const id = this.props.location.search
-        axios.get(`${rootUrl}/api/detail` + id)
+        axios.get(`${rootUrl}/api/detail${id}`)
             .then(function (response) {
                 const res = response.data.file
                 const timeKey = ['businessLicenseValidDate', 'licenseValidDate', 'GSPLicenseValidDate', 'medisanPurchaseValidDate', 'lxMedisanPurchaseValidDate', 'recordDate']
