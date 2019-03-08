@@ -15,8 +15,8 @@ import SubCategoryItem from './SubCategoryItem';
 import data from './data';
 import axios from 'axios';
 import './ComplexTabTable.scss';
-const rootUrl = 'http://172.16.11.17:3000'
-// const rootUrl = 'http://localhost:3000'
+// const rootUrl = 'http://172.16.11.17:3000'
+const rootUrl = 'http://localhost:3000'
 const CancelToken = axios.CancelToken;
 const source = CancelToken.source();
 
@@ -33,6 +33,8 @@ export default class ComplexTabTable extends Component {
             isMobile: false,
             currentTab: 'solved',
             currentCategory: '1',
+            currentPage: 1,
+            search: '',
             tabList: [
                 {
                     text: '已解决',
@@ -300,14 +302,14 @@ export default class ComplexTabTable extends Component {
     };
 
     onSearch = (info) => {
-        console.log(info)
         const _this = this;
         axios.get(`${rootUrl}/api/getlist?pageno=1&&pagesize=10&&count=1&&key="company"&&selectval=${info}`)
             .then(function (response) {
                 _this.setState({
                     viewlist: response.data.file,
                     dataCount: response.data.count,
-                    search: info.key
+                    search: info,
+                    currentPage: 1
                 });
             })
             .catch(function (error) {
@@ -339,16 +341,18 @@ export default class ComplexTabTable extends Component {
         console.log('onError callback:', err)
     }
 
-    handleChange = (pageno) => {
+    handleChange = (pageno, search) => {
         const _this = this;
         let api = `${rootUrl}/api/getlist?pageno=${pageno}&&pagesize=10`
-        if(this.state.search){
+        console.log(search)
+        if(!!this.state.search){
             api = api + `&&count=1&&key="company"&&selectval=${this.state.search}`
         }
         axios.get(api)
             .then(function (response) {
                 _this.setState({
                     viewlist: response.data.file,
+                    currentPage: pageno
                 });
                 console.log(response.data)
             })
@@ -484,8 +488,9 @@ export default class ComplexTabTable extends Component {
                     </Table>
                     <div style={styles.pagination}>
                         <Pagination
+                            current = {this.state.currentPage}
                             pageSize = {10}
-                            onChange = {(current)=>{this.handleChange(current)}}
+                            onChange = {(current)=>{this.handleChange(current, this.state.search)}}
                             total={this.state.dataCount}
                         />
                     </div>
