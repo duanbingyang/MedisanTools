@@ -1,13 +1,12 @@
 /* eslint no-underscore-dangle:0 */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-// import { Table, Pagination, Tab, Search, Upload, Button } from '@alifd/next';
-import {Table} from '@alifd/next';
-import {Pagination} from '@alifd/next';
-import {Tab} from '@alifd/next';
-import {Search} from '@alifd/next';
-import {Upload} from '@alifd/next';
-import {Button} from '@alifd/next';
+import { Table, Pagination, Tab, Search, Upload, Button } from '@alifd/next';
+// import {Pagination} from '@alifd/next';
+// import {Tab} from '@alifd/next';
+// import {Search} from '@alifd/next';
+// import {Upload} from '@alifd/next';
+// import {Button} from '@alifd/next';
 
 import IceContainer from '@icedesign/container';
 import IceLabel from '@icedesign/label';
@@ -303,7 +302,13 @@ export default class ComplexTabTable extends Component {
 
     onSearch = (info) => {
         const _this = this;
-        axios.get(`${rootUrl}/api/getlist?pageno=1&&pagesize=10&&count=1&&key="company"&&selectval=${info}`)
+        let api;
+        if(info){
+            api = `${rootUrl}/api/getlist?pageno=1&&pagesize=10&&count=1&&key="company"&&selectval=${info}`
+        }else{
+            api = `${rootUrl}/api/getlist?pageno=1&&pagesize=10&&count=1`
+        }
+        axios.get(api)
             .then(function (response) {
                 _this.setState({
                     viewlist: response.data.file,
@@ -354,7 +359,6 @@ export default class ComplexTabTable extends Component {
                     viewlist: response.data.file,
                     currentPage: pageno
                 });
-                console.log(response.data)
             })
             .catch(function (error) {
                 console.log(error);
