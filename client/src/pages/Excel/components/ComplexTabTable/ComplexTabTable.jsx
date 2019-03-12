@@ -153,14 +153,6 @@ export default class ComplexTabTable extends Component {
         const id = record.id
         return (
             <div style={styles.complexTabTableOperation}>
-                <a
-                    href="#"
-                    style={styles.operation}
-                    target="_blank"
-                    onClick={this.editItem.bind(this, record)}
-                >
-                    解决
-                </a>
                 <Link 
                     to={'/exceldetail?id=' + id}
                     style={styles.operation}
@@ -169,6 +161,22 @@ export default class ComplexTabTable extends Component {
                 </Link>
                 <a href="#" style={styles.operation} target="_blank">
                     分类
+                </a>
+                <a
+                    href="#"
+                    style={styles.operation}
+                    target="_blank"
+                    onClick={this.editItem.bind(this, record)}
+                >
+                    标记三联合格
+                </a>
+                <a
+                    href="#"
+                    style={styles.operation}
+                    target="_blank"
+                    onClick={this.editItem.bind(this, record)}
+                >
+                    标记兰西合格
                 </a>
             </div>
         );
@@ -197,20 +205,25 @@ export default class ComplexTabTable extends Component {
     renderMedisanJudgement = (value, index, record) => {
         const timesNow = Date.parse(new Date()) / 1000;
         const basicVerify = ['businessLicenseValidDate', 'licenseValidDate', 'GSPLicenseValidDate', 'receivingEntrusted', 'qualityAgreement', 'openAccountPermission', 'billingInformation', 'surveySystem', 'sealImpression']
-        const medisanVerify = ['businessLicenseValidDate', 'licenseValidDate', 'GSPLicenseValidDate', 'medisanPurchaseValidDate', 'receivingEntrusted', 'qualityAgreement', 'openAccountPermission', 'billingInformation', 'surveySystem', 'sealImpression']
-        const lxMedisanVerify = ['businessLicenseValidDate', 'licenseValidDate', 'GSPLicenseValidDate', 'lxMedisanPurchaseValidDate', 'receivingEntrusted', 'qualityAgreement', 'openAccountPermission', 'billingInformation', 'surveySystem', 'sealImpression']
-        let sign = record.medisanPurchaseValidDate
-        for(let i = 0; i<basicVerify.length; i++){
+        const medisanVerify = ['businessLicenseValidDate', 'licenseValidDate', 'GSPLicenseValidDate', 'receivingEntrusted', 'qualityAgreement', 'openAccountPermission', 'billingInformation', 'surveySystem', 'sealImpression', 'medisanPurchaseValidDate']
+        const lxMedisanVerify = ['businessLicenseValidDate', 'licenseValidDate', 'GSPLicenseValidDate', 'receivingEntrusted', 'qualityAgreement', 'openAccountPermission', 'billingInformation', 'surveySystem', 'sealImpression', 'lxMedisanPurchaseValidDate']
+        let sign = 1
+        for(let i = 0; i<medisanVerify.length; i++){
             if(sign){
-                if(record[basicVerify[i]] > 10000){
-                    record[basicVerify[i]] > timesNow ? sign = 1 : sign = 0
+                if(record[medisanVerify[i]] > 10000){
+                    console.log(medisanVerify[i],'=====================',record[medisanVerify[i]])
+                    record[medisanVerify[i]] > timesNow ? sign = 1 : sign = 0
+                }else if(medisanVerify[i] == 'medisanPurchaseValidDate' && record[medisanVerify[i]] === 0){
+                    sign = 1
                 }else{
-                    sign = record[basicVerify[i]]
+                    sign = record[medisanVerify[i]]
+
                 }
             }
+            console.log(i, '==>', medisanVerify[i], '===', sign, )
         }
         record.medisanTag = sign
-        return sign ? <span>合格</span> : <span>不合格</span>
+        return sign ? <span style={styles.goodsign} className="goodsign">合格</span> : <span style={styles.badsign} className="badsign">不合格</span>
     }
     
     renderLxJudgement = (value, index, record) => {
@@ -218,18 +231,20 @@ export default class ComplexTabTable extends Component {
         const basicVerify = ['businessLicenseValidDate', 'licenseValidDate', 'GSPLicenseValidDate', 'receivingEntrusted', 'qualityAgreement', 'openAccountPermission', 'billingInformation', 'surveySystem', 'sealImpression']
         const medisanVerify = ['businessLicenseValidDate', 'licenseValidDate', 'GSPLicenseValidDate', 'medisanPurchaseValidDate', 'receivingEntrusted', 'qualityAgreement', 'openAccountPermission', 'billingInformation', 'surveySystem', 'sealImpression']
         const lxMedisanVerify = ['businessLicenseValidDate', 'licenseValidDate', 'GSPLicenseValidDate', 'lxMedisanPurchaseValidDate', 'receivingEntrusted', 'qualityAgreement', 'openAccountPermission', 'billingInformation', 'surveySystem', 'sealImpression']
-        let sign = record.lxMedisanPurchaseValidDate
-        for(let i = 0; i<basicVerify.length; i++){
+        let sign = 1
+        for(let i = 0; i<lxMedisanVerify.length; i++){
             if(sign){
-                if(record[i] > 10000){
-                    record[i] > timesNow ? sign = 0 : sign = 1
+                if(record[lxMedisanVerify[i]] > 10000){
+                    record[lxMedisanVerify[i]] > timesNow || record[lxMedisanVerify[i]] === 0 ? sign = 1 : sign = 0
+                }else if(lxMedisanVerify[i] == 'lxMedisanPurchaseValidDate' && record[lxMedisanVerify[i]] === 0){
+                    sign = 1
                 }else{
-                    sign = record[i]
+                    sign = record[lxMedisanVerify[i]]
                 }
             }
         }
-        record.medisanTag = sign
-        return sign ? <span>合格</span> : <span>不合格</span>
+        record.lxMedisanTag = sign
+        return sign ? <span style={styles.goodsign} className="goodsign">合格</span> : <span style={styles.badsign} className="badsign">不合格</span>
     }
 
     renderStatus = (value) => {
@@ -474,19 +489,19 @@ export default class ComplexTabTable extends Component {
                         <Table.Column
                             title="资质合格-三联"
                             dataIndex="publishStatus"
-                            width={30}
+                            width={10}
                             cell={this.renderMedisanJudgement}
                         />
                         <Table.Column
                             title="资质合格-兰西"
                             dataIndex="publishStatus"
-                            width={30}
+                            width={10}
                             cell={this.renderLxJudgement}
                         />
                         <Table.Column
                             title="操作"
                             dataIndex="operation"
-                            width={60}
+                            width={120}
                             cell={this.renderOperations}
                         />
                     </Table>
@@ -535,4 +550,24 @@ const styles = {
         textAlign: 'right',
         paddingTop: '26px',
     },
+    // goodsign: {
+    //     display: 'inline-block',
+    //     padding: "5px 10px",
+    //     color: "rgb(82, 196, 26)",
+    //     background: "rgb(246, 255, 237)",
+    //     border: "1px solid rgb(183, 235, 143)",
+    //     borderRadius: "4px",
+    //     minWidth: "58px",
+    //     textAlign: "center"
+    // },
+    // badsign: {
+    //     display: 'inline-block',
+    //     padding: "5px 10px",
+    //     color: "rgb(252,137,137)",
+    //     background: "rgb(252,240,240)",
+    //     border: "1px solid rgb(252,201,201)",
+    //     borderRadius: "4px",
+    //     minWidth: "58px",
+    //     textAlign: "center"
+    // }
 };
