@@ -8,7 +8,7 @@
 }
 .goodsign{
   display: initial;
-  padding: 5px 10px;
+  padding: 5px 16px;
   color: rgb(82,196,26);
   background: rgb(246,255,237);
   border: 1px solid rgb(183,235,143);
@@ -24,5 +24,6 @@
   background: rgb(252,240,240);
   border: 1px solid rgb(252,201,201);
   border-radius: 4px;
+  min-width: 58px;
   text-align: center;
 }

@@ -222,7 +222,7 @@ export default class ComplexTabTable extends Component {
             console.log(i, '==>', medisanVerify[i], '===', sign, )
         }
         record.medisanTag = sign
-        return sign ? <span style={styles.goodsign} className="goodsign">合格</span> : <span style={styles.badsign} className="badsign">不合格</span>
+        return sign ? <div><span style={styles.goodsign} className="goodsign">合格</span></div> : <div><span style={styles.badsign} className="badsign">不合格</span></div>
     }
     
     renderLxJudgement = (value, index, record) => {
@@ -243,7 +243,7 @@ export default class ComplexTabTable extends Component {
             }
         }
         record.lxMedisanTag = sign
-        return sign ? <span style={styles.goodsign} className="goodsign">合格</span> : <span style={styles.badsign} className="badsign">不合格</span>
+        return sign ? <div><span style={styles.goodsign} className="goodsign">合格</span></div> : <div><span style={styles.badsign} className="badsign">不合格</span></div>
     }
 
     renderStatus = (value) => {

@@ -6,7 +6,7 @@ import {
     FormError as IceFormError,
 } from '@icedesign/form-binder';
 import SubCategoryItem from './../../../Excel/components/ComplexTabTable/SubCategoryItem';
-import { Upload, Input, Button, Select, Grid, Tab, Search, DatePicker, CascaderSelect } from '@alifd/next';
+import { Upload, Input, Button, Select, Grid, Tab, Search, DatePicker, CascaderSelect, Switch  } from '@alifd/next';
 import axios from 'axios';
 import moment from 'moment';
 import distData from '../../../../components/DistPickerData/distPickerData'
@@ -38,10 +38,15 @@ export default class ColumnForm extends Component {
                 currency: '',
                 editor: '',
                 businessLicenseValidDate: '',
+                businessLicenseValidForever: '',
                 licenseValidDate: '',
+                licenseValidForever: '',
                 GSPLicenseValidDate: '',
+                GSPLicenseValidForever: '',
                 medisanPurchaseValidDate: '',
+                medisanPurchaseValidForever: '',
                 lxMedisanPurchaseValidDate: '',
+                lxMedisanPurchaseValidForever: '',
                 purchasePersonName: '',
                 receivingEntrusted: '',
                 qualityAgreement: '',
@@ -198,6 +203,11 @@ export default class ColumnForm extends Component {
             distValue: value
         });
     }
+
+    dateForeverOnChange = (checked) => {
+        console.log(`switch to ${checked}`);
+    }
+    
 
     render() {
         const { tabList } = this.state;
@@ -391,6 +401,7 @@ export default class ColumnForm extends Component {
                                                     style={{ width: '100%' }}
                                                 />
                                             </IceFormBinder>
+                                            <Switch checkedChildren="on" onChange={this.dateForeverOnChange} unCheckedChildren="off" />
                                         </Col>
                                     </Row>
 

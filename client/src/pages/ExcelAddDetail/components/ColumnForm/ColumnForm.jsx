@@ -30,11 +30,6 @@ export default class ColumnForm extends Component {
             distValue: null,
             distSelectData: [], 
             value: {
-                contractId: '',
-                operator: '',
-                settleAccount: '',
-                period: '',
-                currency: '',
                 editor: '',
                 businessLicenseValidDate: '',
                 licenseValidDate: '',
@@ -100,11 +95,6 @@ export default class ColumnForm extends Component {
     reset = () => {
         this.setState({
             value: {
-                contractId: '',
-                operator: '',
-                settleAccount: '',
-                period: '',
-                currency: '',
                 editor: '',
                 businessLicenseValidDate: '',
                 licenseValidDate: '',
@@ -128,10 +118,20 @@ export default class ColumnForm extends Component {
         });
     };
 
+    timeToUnix = (time) =>{
+        let formatTime = time.substring(0,time.length-1).replace(/年|月|日/g, '-')
+        return new Date(formatTime).getTime() / 1000
+    }
+
     submit = () => {
         this.formRef.validateAll((error, value) => {
-            const data = value
-            console.log('error', error, 'value' , data);
+            let data = value
+            data.businessLicenseValidDate = this.timeToUnix(data.businessLicenseValidDate)
+            data.licenseValidDate = this.timeToUnix(data.licenseValidDate)
+            data.GSPLicenseValidDate = this.timeToUnix(data.GSPLicenseValidDate)
+            data.medisanPurchaseValidDate = this.timeToUnix(data.medisanPurchaseValidDate)
+            data.lxMedisanPurchaseValidDate = this.timeToUnix(data.lxMedisanPurchaseValidDate)
+            data.recordDate = this.timeToUnix(data.recordDate)
             if (error) {
                 // 处理表单报错
                 console.log(error)
@@ -145,7 +145,6 @@ export default class ColumnForm extends Component {
                 .catch(error=>{
                     console.log('res=>',error);            
                 })
-
             }
         });
     };

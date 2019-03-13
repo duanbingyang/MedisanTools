@@ -110,6 +110,7 @@ class MysqlService {
             sqlData = sqlData + '(' + sqlDatali.slice(0, sqlDatali.length - 1) + ')' + ','
         }
         const sql = 'INSERT INTO ' + mtsqlTableName + ' (' + th.slice(0, th.length - 1) + ') VALUES ' + sqlData.slice(4, sqlData.length - 1)
+        console.log(sql, '===============================')
         return getMysqlPoolData(sql)
     }
 
