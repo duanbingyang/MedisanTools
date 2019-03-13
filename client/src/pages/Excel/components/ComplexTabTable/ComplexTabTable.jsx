@@ -211,7 +211,6 @@ export default class ComplexTabTable extends Component {
         for(let i = 0; i<medisanVerify.length; i++){
             if(sign){
                 if(record[medisanVerify[i]] > 10000){
-                    console.log(medisanVerify[i],'=====================',record[medisanVerify[i]])
                     record[medisanVerify[i]] > timesNow ? sign = 1 : sign = 0
                 }else if(medisanVerify[i] == 'medisanPurchaseValidDate' && record[medisanVerify[i]] === 0){
                     sign = 1
@@ -468,6 +467,12 @@ export default class ComplexTabTable extends Component {
                             cell={this.renderPos}
                         />
                         <Table.Column
+                            title="许可证有效期"
+                            dataIndex="publishStatus"
+                            width={60}
+                            cell={this.renderLicenseValidDate}
+                        />
+                        <Table.Column
                             title="哈三联委托有效期"
                             dataIndex="publishTime"
                             width={60}
@@ -479,12 +484,6 @@ export default class ComplexTabTable extends Component {
                             dataIndex="publishStatus"
                             width={60}
                             cell={this.renderLxTime}
-                        />
-                        <Table.Column
-                            title="许可证有效期"
-                            dataIndex="publishStatus"
-                            width={60}
-                            cell={this.renderLicenseValidDate}
                         />
                         <Table.Column
                             title="资质合格-三联"
