@@ -14,6 +14,7 @@ import distData from '../../../../components/DistPickerData/distPickerData'
 moment().format();
 const { Row, Col } = Grid;
 const rootUrl = 'http://172.16.11.17:3000'
+// const rootUrl = 'http://localhost:3000'
 
 
 export default class ColumnForm extends Component {
@@ -119,19 +120,25 @@ export default class ColumnForm extends Component {
     };
 
     timeToUnix = (time) =>{
-        let formatTime = time.substring(0,time.length-1).replace(/年|月|日/g, '-')
-        return new Date(formatTime).getTime() / 1000
+        if(typeof(time) == 'string'){
+            let formatTime = time.substring(0,time.length-1).replace(/年|月|日/g, '-')
+            return new Date(formatTime).getTime() / 1000
+        }else if(typeof(time) == 'number'){
+            return time
+        }
     }
 
     submit = () => {
         this.formRef.validateAll((error, value) => {
             let data = value
+            
             data.businessLicenseValidDate = this.timeToUnix(data.businessLicenseValidDate)
             data.licenseValidDate = this.timeToUnix(data.licenseValidDate)
             data.GSPLicenseValidDate = this.timeToUnix(data.GSPLicenseValidDate)
             data.medisanPurchaseValidDate = this.timeToUnix(data.medisanPurchaseValidDate)
             data.lxMedisanPurchaseValidDate = this.timeToUnix(data.lxMedisanPurchaseValidDate)
             data.recordDate = this.timeToUnix(data.recordDate)
+
             if (error) {
                 // 处理表单报错
                 console.log(error)

@@ -108,7 +108,7 @@ class FileController {
 
     async addDetail(ctx) {
         let userData = ctx.request.body
-        const insertData = []
+        let insertData = []
         for (let i = 0; i < config.titleEN.length; i++){
             if(userData[config.titleEN[i]] == ''){
                 insertData.push('null')
@@ -118,7 +118,10 @@ class FileController {
                 insertData.push(userData[config.titleEN[i]])
             }
         }
+        insertData = JSON.stringify(insertData).replace(/\[|\]/g, '')
+        console.log(insertData)
         const sql = `INSERT INTO ${mtsqlTableName} ( ${config.titleEN.toString()} ) VALUES ( ${insertData.toString()} );`
+        console.log(sql, '===============================')
         const result = await mysqlservice.insert({
             sql: sql
         })
