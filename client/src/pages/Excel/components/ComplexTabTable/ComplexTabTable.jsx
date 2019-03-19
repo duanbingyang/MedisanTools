@@ -219,7 +219,6 @@ export default class ComplexTabTable extends Component {
 
                 }
             }
-            console.log(i, '==>', medisanVerify[i], '===', sign, )
         }
         record.medisanTag = sign
         return sign ? <div><span style={styles.goodsign} className="goodsign">合格</span></div> : <div><span style={styles.badsign} className="badsign">不合格</span></div>

@@ -38,15 +38,10 @@ export default class ColumnForm extends Component {
                 currency: '',
                 editor: '',
                 businessLicenseValidDate: '',
-                businessLicenseValidForever: '',
                 licenseValidDate: '',
-                licenseValidForever: '',
                 GSPLicenseValidDate: '',
-                GSPLicenseValidForever: '',
                 medisanPurchaseValidDate: '',
-                medisanPurchaseValidForever: '',
                 lxMedisanPurchaseValidDate: '',
-                lxMedisanPurchaseValidForever: '',
                 purchasePersonName: '',
                 receivingEntrusted: '',
                 qualityAgreement: '',
@@ -60,8 +55,13 @@ export default class ColumnForm extends Component {
                 province: '',
                 legalPersonName: '',
                 registeredCapital: '',
-
-
+            },
+            switch: {
+                businessLicenseValidDate: false,
+                licenseValidDate: false,
+                GSPLicenseValidDate: false,
+                medisanPurchaseValidDate: false,
+                lxMedisanPurchaseValidDate: false,
             },
             tabList: [
                 {
@@ -105,6 +105,19 @@ export default class ColumnForm extends Component {
         }
     }
 
+    // shouldComponentUpdate(nextProps, nextState){
+    //     console.log(JSON.stringify(this.state.switch) !== JSON.stringify(nextState.checked))
+    //     return JSON.stringify(this.state.switch) !== JSON.stringify(nextState.checked)
+    // }
+
+    // componentWillUpdate(){
+    //     console.log('==>componentWillUpdate')
+    // }
+
+    // componentDidUpdate(){
+    //     console.log('==>componentDidUpdate')
+    // }
+
     resetDetail = (ctx) => {
         const _this = this;
         const id = this.props.location.search
@@ -112,16 +125,28 @@ export default class ColumnForm extends Component {
             .then(function (response) {
                 const res = response.data.file
                 const timeKey = ['businessLicenseValidDate', 'licenseValidDate', 'GSPLicenseValidDate', 'medisanPurchaseValidDate', 'lxMedisanPurchaseValidDate', 'recordDate']
+                const newSwitch = {
+                    businessLicenseValidDate: false,
+                    licenseValidDate: false,
+                    GSPLicenseValidDate: false,
+                    medisanPurchaseValidDate: false,
+                    lxMedisanPurchaseValidDate: false,
+                }
                 for(let key in res){
-                    if(res[key]){
-                        console.log(timeKey.indexOf(key))
+                    if(res[key] === 0){
+                        newSwitch[key] = true
+                    }else if(res[key]){
                         if(timeKey.indexOf(key) != -1){
                             res[key] = moment(res[key] * 1000)
                         }
+                    }else if(res[key] == null){
+                        res[key] = ''
                     }
                 }
+                console.log(res)
                 _this.setState({
-                   value: res
+                   value: res,
+                   switch: newSwitch
                 });
             })
             .catch(function (error) {
@@ -204,13 +229,20 @@ export default class ColumnForm extends Component {
         });
     }
 
-    dateForeverOnChange = (checked) => {
+    dateForeverOnChange = (checked, event) => {
         console.log(`switch to ${checked}`);
+        console.log(event)
+        console.log(event.target.getAttribute('data-name'))
+        let nextSwitch = this.state.switch
+        nextSwitch[event.target.getAttribute('data-name')] = !nextSwitch[event.target.getAttribute('data-name')]
+        this.setState({
+            switch: nextSwitch
+        })
     }
-    
 
     render() {
         const { tabList } = this.state;
+        console.log(this.state.switch.businessLicenseValidDate)
         return (
             <div className="column-form">
                 <IceContainer>
@@ -398,10 +430,20 @@ export default class ColumnForm extends Component {
                                                 <DatePicker
                                                     format="YYYY年MM月DD日" 
                                                     onChange={console.log(123)} 
-                                                    style={{ width: '100%' }}
+                                                    style={{ width: '100%'}}
                                                 />
                                             </IceFormBinder>
-                                            <Switch checkedChildren="on" onChange={this.dateForeverOnChange} unCheckedChildren="off" />
+                                        </Col>
+                                        <Col s="12" l="12">
+                                            <IceFormBinder name="businessLicenseValidForever">
+                                                <Switch 
+                                                    data-name="businessLicenseValidDate"
+                                                    checkedChildren="永"
+                                                    onChange={this.dateForeverOnChange}
+                                                    unCheckedChildren="限" 
+                                                    checked={this.state.switch.businessLicenseValidDate}
+                                                />
+                                            </IceFormBinder>
                                         </Col>
                                     </Row>
 
@@ -415,6 +457,17 @@ export default class ColumnForm extends Component {
                                                     format="YYYY年MM月DD日" 
                                                     onChange={console.log(123)} 
                                                     style={{ width: '100%' }}
+                                                />
+                                            </IceFormBinder>
+                                        </Col>
+                                        <Col>
+                                            <IceFormBinder name="licenseValidForever">
+                                                <Switch 
+                                                    data-name="licenseValidDate"
+                                                    checkedChildren="永"
+                                                    onChange={this.dateForeverOnChange}
+                                                    unCheckedChildren="限"
+                                                    checked = {this.state.switch.licenseValidDate} 
                                                 />
                                             </IceFormBinder>
                                         </Col>
@@ -433,6 +486,17 @@ export default class ColumnForm extends Component {
                                                 />
                                             </IceFormBinder>
                                         </Col>
+                                        <Col>
+                                            <IceFormBinder name="GSPLicenseValidForever">
+                                                <Switch 
+                                                    data-name="GSPLicenseValidDate"
+                                                    checkedChildren="永"
+                                                    onChange={this.dateForeverOnChange}
+                                                    unCheckedChildren="限"
+                                                    checked = {this.state.switch.GSPLicenseValidDate} 
+                                                />
+                                            </IceFormBinder>
+                                        </Col>
                                     </Row>
 
                                     <Row style={styles.formItem}>
@@ -448,6 +512,17 @@ export default class ColumnForm extends Component {
                                                 />
                                             </IceFormBinder>
                                         </Col>
+                                        <Col>
+                                            <IceFormBinder name="medisanPurchaseValidForever">
+                                                <Switch 
+                                                    data-name="medisanPurchaseValidDate"
+                                                    checkedChildren="永"
+                                                    onChange={this.dateForeverOnChange}
+                                                    unCheckedChildren="限"
+                                                    checked={this.state.switch.medisanPurchaseValidDate} 
+                                                />
+                                            </IceFormBinder>
+                                        </Col>
                                     </Row>
 
                                     <Row style={styles.formItem}>
@@ -460,6 +535,17 @@ export default class ColumnForm extends Component {
                                                     format="YYYY年MM月DD日" 
                                                     onChange={console.log(123)} 
                                                     style={{ width: '100%' }}
+                                                />
+                                            </IceFormBinder>
+                                        </Col>
+                                        <Col>
+                                            <IceFormBinder name="lxMedisanPurchaseValidForever">
+                                                <Switch 
+                                                    data-name="lxMedisanPurchaseValidDate"
+                                                    checkedChildren="永"
+                                                    onChange={this.dateForeverOnChange}
+                                                    unCheckedChildren="限"
+                                                    checked = {this.state.switch.lxMedisanPurchaseValidDate} 
                                                 />
                                             </IceFormBinder>
                                         </Col>
