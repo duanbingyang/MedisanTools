@@ -21,6 +21,25 @@ const headerMenuConfig = [
 
 const asideMenuConfig = [
     {
+        name: '资质管理',
+        icon: 'gaojingxinxi',
+        children: [
+            {
+                name: '添加资质',
+                path: '/excelAddDetail',
+            },
+            {
+                name: '资质列表',
+                path: '/excel',
+            }
+        ],
+    },
+    {
+        name: 'tabexample',
+        path: '/tabexample',
+        icon: 'home',
+    },
+    {
         name: 'Dashboard',
         path: '/dashboard',
         icon: 'home2',
@@ -141,26 +160,7 @@ const asideMenuConfig = [
                 path: '/exception/500',
             },
         ],
-    },
-    {
-        name: '资质管理',
-        icon: 'gaojingxinxi',
-        children: [
-            {
-                name: '添加资质',
-                path: '/excelAddDetail',
-            },
-            {
-                name: '资质列表',
-                path: '/excel',
-            }
-        ],
-    },
-    {
-        name: 'tabexample',
-        path: '/tabexample',
-        icon: 'home',
-    },
+    }
 ];
 
 export { headerMenuConfig, asideMenuConfig };

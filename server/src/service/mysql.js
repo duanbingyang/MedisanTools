@@ -3,7 +3,7 @@ const checkModel = require('../model/check');
 const getMysqlConnectionData = MysqlModel.getMysqlConnectionData;
 const getMysqlPoolData = MysqlModel.getMysqlPoolData;
 const getMysqlDataList = MysqlModel.getMysqlDataList;
-const mtsqlTableName = 'realdata'
+const mysqlTableName = 'realdata'
 
 const distData = {
     "北京": "11",
@@ -53,7 +53,7 @@ class MysqlService {
 
     async mysqlConnect() {
 
-        const sql = `SELECT * FROM ${mtsqlTableName}`;
+        const sql = `SELECT * FROM ${mysqlTableName}`;
 
         return getMysqlConnectionData(sql)
     }
@@ -109,7 +109,7 @@ class MysqlService {
             }
             sqlData = sqlData + '(' + sqlDatali.slice(0, sqlDatali.length - 1) + ')' + ','
         }
-        const sql = 'INSERT INTO ' + mtsqlTableName + ' (' + th.slice(0, th.length - 1) + ') VALUES ' + sqlData.slice(4, sqlData.length - 1)
+        const sql = 'INSERT INTO ' + mysqlTableName + ' (' + th.slice(0, th.length - 1) + ') VALUES ' + sqlData.slice(4, sqlData.length - 1)
         return getMysqlPoolData(sql)
     }
 

@@ -6,7 +6,7 @@ import {
     FormError as IceFormError,
 } from '@icedesign/form-binder';
 import SubCategoryItem from './../../../Excel/components/ComplexTabTable/SubCategoryItem';
-import { Upload, Input, Button, Select, Grid, Tab, Search, DatePicker, CascaderSelect } from '@alifd/next';
+import { Upload, Input, Button, Select, Grid, Tab, Search, DatePicker, CascaderSelect, Switch } from '@alifd/next';
 import axios from 'axios';
 import qs from 'qs';
 import moment from 'moment';
@@ -50,6 +50,13 @@ export default class ColumnForm extends Component {
                 province: '',
                 legalPersonName: '',
                 registeredCapital: '',
+            },
+            switch: {
+                businessLicenseValidDate: false,
+                licenseValidDate: false,
+                GSPLicenseValidDate: false,
+                medisanPurchaseValidDate: false,
+                lxMedisanPurchaseValidDate: false,
             },
             tabList: [
                 {
@@ -130,14 +137,13 @@ export default class ColumnForm extends Component {
 
     submit = () => {
         this.formRef.validateAll((error, value) => {
-            let data = value
-            
-            data.businessLicenseValidDate = this.timeToUnix(data.businessLicenseValidDate)
-            data.licenseValidDate = this.timeToUnix(data.licenseValidDate)
-            data.GSPLicenseValidDate = this.timeToUnix(data.GSPLicenseValidDate)
-            data.medisanPurchaseValidDate = this.timeToUnix(data.medisanPurchaseValidDate)
-            data.lxMedisanPurchaseValidDate = this.timeToUnix(data.lxMedisanPurchaseValidDate)
-            data.recordDate = this.timeToUnix(data.recordDate)
+            let data = Object.assign({}, value)
+            data.businessLicenseValidDate = data.businessLicenseValidForever ? 1 : this.timeToUnix(data.businessLicenseValidDate)
+            data.licenseValidDate =  data.licenseValidForever ? 1 : this.timeToUnix(data.licenseValidDate)
+            data.GSPLicenseValidDate =  data.GSPLicenseValidForever ? 1 : this.timeToUnix(data.GSPLicenseValidDate)
+            data.medisanPurchaseValidDate =  data.medisanPurchaseValidForever ? 1 : this.timeToUnix(data.medisanPurchaseValidDate)
+            data.lxMedisanPurchaseValidDate =  data.lxMedisanPurchaseValidForever ? 1 : this.timeToUnix(data.lxMedisanPurchaseValidDate)
+            data.recordDate = data.recordDate ? this.timeToUnix(data.recordDate) :  Date.parse(new Date()) / 1000
 
             if (error) {
                 // 处理表单报错
@@ -398,6 +404,16 @@ export default class ColumnForm extends Component {
                                                 />
                                             </IceFormBinder>
                                         </Col>
+                                        <Col style={{marginTop: '5px', marginLeft: '10px'}}>
+                                            <IceFormBinder name="businessLicenseValidForever">
+                                                <Switch 
+                                                    data-name="businessLicenseValidDate"
+                                                    checkedChildren="永"
+                                                    onChange={this.dateForeverOnChange}
+                                                    unCheckedChildren="限"
+                                                />
+                                            </IceFormBinder>
+                                        </Col>
                                     </Row>
 
                                     <Row style={styles.formItem}>
@@ -410,6 +426,16 @@ export default class ColumnForm extends Component {
                                                     format="YYYY年MM月DD日" 
                                                     onChange={console.log(123)} 
                                                     style={{ width: '100%' }}
+                                                />
+                                            </IceFormBinder>
+                                        </Col>
+                                        <Col style={{marginTop: '5px', marginLeft: '10px'}}>
+                                            <IceFormBinder name="licenseValidForever">
+                                                <Switch 
+                                                    data-name="licenseValidDate"
+                                                    checkedChildren="永"
+                                                    onChange={this.dateForeverOnChange}
+                                                    unCheckedChildren="限"
                                                 />
                                             </IceFormBinder>
                                         </Col>
@@ -428,6 +454,16 @@ export default class ColumnForm extends Component {
                                                 />
                                             </IceFormBinder>
                                         </Col>
+                                        <Col style={{marginTop: '5px', marginLeft: '10px'}}>
+                                            <IceFormBinder name="GSPLicenseValidForever">
+                                                <Switch 
+                                                    data-name="GSPLicenseValidDate"
+                                                    checkedChildren="永"
+                                                    onChange={this.dateForeverOnChange}
+                                                    unCheckedChildren="限"
+                                                />
+                                            </IceFormBinder>
+                                        </Col>
                                     </Row>
 
                                     <Row style={styles.formItem}>
@@ -443,6 +479,16 @@ export default class ColumnForm extends Component {
                                                 />
                                             </IceFormBinder>
                                         </Col>
+                                        <Col style={{marginTop: '5px', marginLeft: '10px'}}>
+                                            <IceFormBinder name="medisanPurchaseValidForever">
+                                                <Switch 
+                                                    data-name="medisanPurchaseValidDate"
+                                                    checkedChildren="永"
+                                                    onChange={this.dateForeverOnChange}
+                                                    unCheckedChildren="限"
+                                                />
+                                            </IceFormBinder>
+                                        </Col>
                                     </Row>
 
                                     <Row style={styles.formItem}>
@@ -455,6 +501,16 @@ export default class ColumnForm extends Component {
                                                     format="YYYY年MM月DD日" 
                                                     onChange={console.log(123)} 
                                                     style={{ width: '100%' }}
+                                                />
+                                            </IceFormBinder>
+                                        </Col>
+                                        <Col style={{marginTop: '5px', marginLeft: '10px'}}>
+                                            <IceFormBinder name="lxMedisanPurchaseValidForever">
+                                                <Switch 
+                                                    data-name="lxMedisanPurchaseValidDate"
+                                                    checkedChildren="永"
+                                                    onChange={this.dateForeverOnChange}
+                                                    unCheckedChildren="限"
                                                 />
                                             </IceFormBinder>
                                         </Col>
@@ -596,6 +652,7 @@ export default class ColumnForm extends Component {
                                                     format="YYYY年MM月DD日" 
                                                     onChange={console.log(123)} 
                                                     style={{ width: '100%' }}
+                                                    defaultValue={this.state.value.recordDate}
                                                 />
                                             </IceFormBinder>
                                         </Col>

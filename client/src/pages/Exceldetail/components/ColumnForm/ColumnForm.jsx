@@ -434,7 +434,7 @@ export default class ColumnForm extends Component {
                                                 />
                                             </IceFormBinder>
                                         </Col>
-                                        <Col s="12" l="12">
+                                        <Col style={{marginTop: '5px', marginLeft: '10px'}}>
                                             <IceFormBinder name="businessLicenseValidForever">
                                                 <Switch 
                                                     data-name="businessLicenseValidDate"
@@ -460,7 +460,7 @@ export default class ColumnForm extends Component {
                                                 />
                                             </IceFormBinder>
                                         </Col>
-                                        <Col>
+                                        <Col style={{marginTop: '5px', marginLeft: '10px'}}>
                                             <IceFormBinder name="licenseValidForever">
                                                 <Switch 
                                                     data-name="licenseValidDate"
@@ -486,7 +486,7 @@ export default class ColumnForm extends Component {
                                                 />
                                             </IceFormBinder>
                                         </Col>
-                                        <Col>
+                                        <Col style={{marginTop: '5px', marginLeft: '10px'}}>
                                             <IceFormBinder name="GSPLicenseValidForever">
                                                 <Switch 
                                                     data-name="GSPLicenseValidDate"
@@ -512,7 +512,7 @@ export default class ColumnForm extends Component {
                                                 />
                                             </IceFormBinder>
                                         </Col>
-                                        <Col>
+                                        <Col style={{marginTop: '5px', marginLeft: '10px'}}>
                                             <IceFormBinder name="medisanPurchaseValidForever">
                                                 <Switch 
                                                     data-name="medisanPurchaseValidDate"
@@ -538,7 +538,7 @@ export default class ColumnForm extends Component {
                                                 />
                                             </IceFormBinder>
                                         </Col>
-                                        <Col>
+                                        <Col style={{marginTop: '5px', marginLeft: '10px'}}>
                                             <IceFormBinder name="lxMedisanPurchaseValidForever">
                                                 <Switch 
                                                     data-name="lxMedisanPurchaseValidDate"
