@@ -204,15 +204,18 @@ export default class ComplexTabTable extends Component {
 
     renderMedisanJudgement = (value, index, record) => {
         const timesNow = Date.parse(new Date()) / 1000;
-        const basicVerify = ['businessLicenseValidDate', 'licenseValidDate', 'GSPLicenseValidDate', 'receivingEntrusted', 'qualityAgreement', 'openAccountPermission', 'billingInformation', 'surveySystem', 'sealImpression']
+        const DateVerify = ['businessLicenseValidDate', 'licenseValidDate', 'GSPLicenseValidDate', 'medisanPurchaseValidDate']
         const medisanVerify = ['businessLicenseValidDate', 'licenseValidDate', 'GSPLicenseValidDate', 'receivingEntrusted', 'qualityAgreement', 'openAccountPermission', 'billingInformation', 'surveySystem', 'sealImpression', 'medisanPurchaseValidDate']
         const lxMedisanVerify = ['businessLicenseValidDate', 'licenseValidDate', 'GSPLicenseValidDate', 'receivingEntrusted', 'qualityAgreement', 'openAccountPermission', 'billingInformation', 'surveySystem', 'sealImpression', 'lxMedisanPurchaseValidDate']
         let sign = 1
         for(let i = 0; i<medisanVerify.length; i++){
+            if(i == 5){
+                console.log(record)
+            }
             if(sign){
                 if(record[medisanVerify[i]] > 10000){
                     record[medisanVerify[i]] > timesNow ? sign = 1 : sign = 0
-                }else if(medisanVerify[i] == 'medisanPurchaseValidDate' && record[medisanVerify[i]] === 0){
+                }else if(medisanVerify[i].indexOf(DateVerify) && record[medisanVerify[i]] === 0){
                     sign = 1
                 }else{
                     sign = record[medisanVerify[i]]
@@ -226,7 +229,7 @@ export default class ComplexTabTable extends Component {
     
     renderLxJudgement = (value, index, record) => {
         const timesNow = Date.parse(new Date()) / 1000;
-        const basicVerify = ['businessLicenseValidDate', 'licenseValidDate', 'GSPLicenseValidDate', 'receivingEntrusted', 'qualityAgreement', 'openAccountPermission', 'billingInformation', 'surveySystem', 'sealImpression']
+        const DateVerify = ['businessLicenseValidDate', 'licenseValidDate', 'GSPLicenseValidDate', 'lxMedisanPurchaseValidDate']
         const medisanVerify = ['businessLicenseValidDate', 'licenseValidDate', 'GSPLicenseValidDate', 'medisanPurchaseValidDate', 'receivingEntrusted', 'qualityAgreement', 'openAccountPermission', 'billingInformation', 'surveySystem', 'sealImpression']
         const lxMedisanVerify = ['businessLicenseValidDate', 'licenseValidDate', 'GSPLicenseValidDate', 'lxMedisanPurchaseValidDate', 'receivingEntrusted', 'qualityAgreement', 'openAccountPermission', 'billingInformation', 'surveySystem', 'sealImpression']
         let sign = 1
@@ -234,7 +237,7 @@ export default class ComplexTabTable extends Component {
             if(sign){
                 if(record[lxMedisanVerify[i]] > 10000){
                     record[lxMedisanVerify[i]] > timesNow || record[lxMedisanVerify[i]] === 0 ? sign = 1 : sign = 0
-                }else if(lxMedisanVerify[i] == 'lxMedisanPurchaseValidDate' && record[lxMedisanVerify[i]] === 0){
+                }else if(medisanVerify[i].indexOf(DateVerify) && record[medisanVerify[i]] === 0){
                     sign = 1
                 }else{
                     sign = record[lxMedisanVerify[i]]
@@ -243,6 +246,10 @@ export default class ComplexTabTable extends Component {
         }
         record.lxMedisanTag = sign
         return sign ? <div><span style={styles.goodsign} className="goodsign">合格</span></div> : <div><span style={styles.badsign} className="badsign">不合格</span></div>
+    }
+
+    mark = (value, index, record) => {
+        return (<span>{record.mark}</span>)
     }
 
     renderStatus = (value) => {
@@ -495,6 +502,12 @@ export default class ComplexTabTable extends Component {
                             dataIndex="publishStatus"
                             width={10}
                             cell={this.renderLxJudgement}
+                        />
+                        <Table.Column
+                            title="备注"
+                            dataIndex="mark"
+                            width={10}
+                            cell={this.mark}
                         />
                         <Table.Column
                             title="操作"
