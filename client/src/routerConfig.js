@@ -28,6 +28,9 @@ import Excel from './pages/Excel';
 import BasicLayout from './layouts/BasicLayout';
 import Tabexample from './pages/Tabexample';
 import Exceldetail from './pages/Exceldetail';
+
+import ErPsth from './pages/ErPsth';
+import Meeting from './pages/Meeting';
 import ExcelAddDetail from './pages/ExcelAddDetail';
 
 const routerConfig = [
@@ -126,6 +129,14 @@ const routerConfig = [
     path: '/tabexample',
     layout: BasicLayout,
     component: Tabexample,
+  },
+  {
+    path: '/ERPsth',
+    component: ErPsth,
+  },
+  {
+    path: '/meeting',
+    component: Meeting,
   },
 ];
 

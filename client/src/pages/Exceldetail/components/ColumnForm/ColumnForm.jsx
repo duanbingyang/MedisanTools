@@ -274,7 +274,7 @@ export default class ColumnForm extends Component {
                     >
                         <Button type="primary" style={{ margin: "0 0 10px" }}>
                             上传文件
-                    </Button>
+                        </Button>
                     </Upload>
                     <Tab
                         onChange={this.onTabChange}
@@ -360,6 +360,19 @@ export default class ColumnForm extends Component {
                                                 <Input style={{ width: '100%' }} />
                                             </IceFormBinder>
                                             <IceFormError name="company" />
+                                        </Col>
+                                        
+                                        <Col xxs="8" s="6" l="5" style={styles.formLabel}>
+                                            原公司名称：
+                                        </Col>
+                                        <Col s="12" l="12">
+                                            <IceFormBinder
+                                                name="company_old"
+                                                message="原公司名称必须填写"
+                                            >
+                                                <Input style={{ width: '100%' }} />
+                                            </IceFormBinder>
+                                            <IceFormError name="company_old" />
                                         </Col>
                                     </Row>
 
@@ -674,6 +687,17 @@ export default class ColumnForm extends Component {
                                                 <Input style={{ width: '100%' }} />
                                             </IceFormBinder>
                                             <IceFormError name="positionId" />
+                                        </Col>
+                                    </Row>
+
+                                    <Row style={{marginBottom: "30px", lineHeight: "28px", fontSize: "14px"}}>
+                                        <Col xxs="8" s="6" l="5" style={styles.formLabel}>
+                                            备注：
+                                        </Col>
+                                        <Col s="12" l="12">
+                                            <IceFormBinder name="mark">
+                                                <Input.TextArea style={{ width: '100%' }} aria-label="auto height" autoHeight={{ minRows: 2, maxRows: 6 }} />
+                                            </IceFormBinder>
                                         </Col>
                                     </Row>
 

@@ -1,6 +1,7 @@
 const userController = require('./controller/user');
 const mysqlController = require('./controller/mysql');
 const fileController = require('./controller/file-oss');
+const ERPfileController = require('./controller/ErPsth/upload');
 
 module.exports = (router) => {
   router.prefix('/api');
@@ -16,4 +17,5 @@ module.exports = (router) => {
     .get('/search', fileController.search)
     .get('/detail', fileController.detail)
     .post('/adddetail', fileController.addDetail)
+    .post('/ERPuploadfile', ERPfileController.fileUploadapi)
 };
