@@ -13,8 +13,8 @@ import moment from 'moment';
 import distData from '../../../../components/DistPickerData/distPickerData'
 moment().format();
 const { Row, Col } = Grid;
-const rootUrl = 'http://172.16.11.17:3000'
-// const rootUrl = 'http://localhost:3000'
+// const rootUrl = 'http://172.16.11.17:3000'
+const rootUrl = 'http://localhost:3000'
 
 
 export default class ColumnForm extends Component {
