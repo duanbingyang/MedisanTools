@@ -3,6 +3,7 @@ const mysqlController = require('./controller/mysql');
 const fileController = require('./controller/file-oss');
 const ERPfileController = require('./controller/ErPsth/upload');
 const CRMfileController = require('./controller/crmApi/m_addMeetingUser');
+const pubController = require('./controller/public/pubController');
 
 module.exports = (router) => {
   router.prefix('/api');
@@ -20,4 +21,5 @@ module.exports = (router) => {
     .post('/adddetail', fileController.addDetail)
     .post('/ERPuploadfile', ERPfileController.fileUploadapi)
     .post('/addUser_crm', CRMfileController.addUser)
+    .post('/vCode', pubController.txVerificationCode)
 };

@@ -16,9 +16,10 @@ class MysqlService {
 
     async add(obj) {
         const url = obj.request.url;
-        const index = url.indexOf('?');
-        const params = url.substring(index+1,url.length);
-        const params_json = querystring.parse(params);
+        // const index = url.indexOf('?');
+        // const params = url.substring(index+1,url.length);
+        // const params_json = querystring.parse(params);
+        const params_json = obj.request.body
         const addKey = [];
         let addData = '';
         for(let i in params_json){
@@ -26,6 +27,7 @@ class MysqlService {
             addData = addData + ',"' + params_json[i] + '"';
         }
         const sql = 'INSERT INTO ' + mysqlTableName + ' (' + querystring.unescape(addKey) + ') VALUES ' + '(' + addData.substring(1,addData.length) + ')';
+
         return getMysqlPoolData(sql)
     }
 
