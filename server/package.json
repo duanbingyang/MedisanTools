@@ -39,7 +39,8 @@
     "node-xlsx": "^0.14.1",
     "qcloudsms_js": "^0.1.1",
     "qs": "^6.6.0",
-    "querystring": "^0.2.0"
+    "querystring": "^0.2.0",
+    "we-validator": "^2.1.10"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.3",
