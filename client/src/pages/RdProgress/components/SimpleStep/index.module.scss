@@ -1,0 +1,12 @@
+
+    .buttonGroup {
+      display: flex;
+      justify-content: center;
+      margin: 40px 0 20px;
+    };
+    :global {
+      .RdStepBox:last-child .next-step .next-step-item .next-step-item-body{
+          width: 174px!important;
+      }
+    };
+  

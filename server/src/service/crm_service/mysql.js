@@ -26,15 +26,50 @@ class MysqlService {
 
         const validate = this.validator(params_json)
 
-        console.log(validate)
-        
         for(let i in params_json){
             addKey.push(i);
-            addData = addData + ',"' + params_json[i] + '"';
+            if(params_json[i] === true || params_json[i] === false || params_json[i] === 'true' || params_json[i] === 'false'){
+                addData = addData + ',' + params_json[i]
+            }else{
+                addData = addData + ',"' + params_json[i] + '"'
+            }
         }
-        const sql = 'INSERT INTO ' + mysqlTableName + ' (' + querystring.unescape(addKey) + ') VALUES ' + '(' + addData.substring(1,addData.length) + ')';
-        console.log(sql, '===================')
-        return getMysqlPoolData(sql)
+        const phoneCheck = await this.find({"sql": 'SELECT COUNT(*) FROM ' + mysqlTableName + ' WHERE phone = ' + params_json.phone })
+
+        const verificationCode = this.verificationCode()
+
+        addKey.push('code');
+        addData = addData + ',"' + verificationCode + '"'
+
+        if(!phoneCheck[0][0]['COUNT(*)']){
+            const sql = 'INSERT INTO ' + mysqlTableName + ' (' + querystring.unescape(addKey) + ') VALUES ' + '(' + addData.substring(1,addData.length) + ')'
+            console.log(sql)
+            return {
+                'code': 0,
+                'msg': await getMysqlPoolData(sql),
+                'verificationCode': verificationCode
+
+            }
+        }else{
+            return {
+                'code': 1,
+                'msg': '该手机号已领取',
+                'verificationCode': false
+            }
+        }
+    }
+
+    verificationCode() {
+        var arr = ["A","B","C","D","E","F","G","H","J","K","L","M","N","P","Q","R","S","T","U","V","W","X","Y","Z",
+                    "a","b","c","d","e","f","g","h","i","j","k","m","n","p","q","r","s","t","u","v","w","x","y","z",
+                    0,1,2,3,4,5,6,7,8,9];
+        var  rand1 = Math.floor((Math.random()*58));
+        var  rand2 = Math.floor((Math.random()*58));
+        var  rand3 = Math.floor((Math.random()*58));
+        var  rand4 = Math.floor((Math.random()*58));
+        var  rand5 = Math.floor((Math.random()*58));
+        var  rand6 = Math.floor((Math.random()*58));
+        return arr[rand1] + arr[rand2] + arr[rand3] + arr[rand4] + arr[rand5] + arr[rand6]
     }
 
     async find(obj) {

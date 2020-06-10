@@ -30,13 +30,20 @@ import Tabexample from './pages/Tabexample';
 import Exceldetail from './pages/Exceldetail';
 
 import ErPsth from './pages/ErPsth';
-import Meeting from './pages/Meeting';
+
+import H5Player from './pages/H5Player';
+import Meetctl from './pages/Meetctl';
+import RdProgress from './pages/RdProgress';
+import RdProgressAdd from './pages/RdProgressAdd';
+import RdProgressEdit from './pages/RdProgressEdit';
+import RdProgressList from './pages/RdProgressList';
+import RdProgressListEdit from './pages/RdProgressListEdit';
 import ExcelAddDetail from './pages/ExcelAddDetail';
 
 const routerConfig = [
   {
-    path: '/account/profile',
-    component: Profile,
+    path: '/exception/204',
+    component: Empty,
   },
   {
     path: '/portlets/base',
@@ -91,12 +98,12 @@ const routerConfig = [
     component: ServerError,
   },
   {
-    path: '/exception/403',
-    component: Forbidden,
+    path: '/account/profile',
+    component: Profile,
   },
   {
-    path: '/exception/204',
-    component: Empty,
+    path: '/exception/403',
+    component: Forbidden,
   },
   {
     path: '/exception/404',
@@ -135,8 +142,32 @@ const routerConfig = [
     component: ErPsth,
   },
   {
-    path: '/meeting',
-    component: Meeting,
+    path: '/h5player',
+    component: H5Player,
+  },
+  {
+    path: '/meetctl',
+    component: Meetctl,
+  },
+  {
+    path: '/rdprogress',
+    component: RdProgress,
+  },
+  {
+    path: '/rdprogressadd',
+    component: RdProgressAdd,
+  },
+  {
+    path: '/rdprogressedit',
+    component: RdProgressEdit,
+  },
+  {
+    path: '/rdprogresslist',
+    component: RdProgressList,
+  },
+  {
+    path: '/rdprogresslistedit',
+    component: RdProgressListEdit,
   },
 ];
 

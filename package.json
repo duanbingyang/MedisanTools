@@ -43,7 +43,12 @@
   "engines": {
     "node": ">=8.0.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "chimee": "^0.11.0",
+    "chimee-player": "^1.4.8",
+    "history": "^4.10.1",
+    "moment": "^2.26.0"
+  },
   "devDependencies": {},
   "title": "tesst",
   "templateType": "koa2"

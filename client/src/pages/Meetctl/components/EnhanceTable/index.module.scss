@@ -1,0 +1,53 @@
+.titleWrapper{
+  display: flex;
+  flex-direction: row;
+};
+.title{
+  margin-left: 10px;
+  line-height: 20px;
+};
+.enhanceTableOperation{
+  line-height: 28px;
+  .alreadyGiven{
+    color: #666!important;
+  }
+};
+.operation{
+  margin-right: 12px;
+  text-decoration: none;
+};
+.givenStatus{
+  display: inline-block;
+  padding: 2px 5px;
+  border: 1px solid #10BE41;
+  color: #10BE41;
+  border-radius: 4px;
+};
+.unGivenStatus{
+  display: inline-block;
+  padding: 2px 5px;
+  border: 1px solid #DD5043;
+  color: #DD5043;
+  border-radius: 4px;
+};
+.card{
+  min-height: 0;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+};
+.tabCount{
+  color: #3080FE;
+};
+.extraFilter{
+  display: flex;
+  align-items: center;
+};
+.search{
+  margin-left: 10px;
+};
+.pagination{
+  text-align: right;
+  padding-top: 26px;
+};

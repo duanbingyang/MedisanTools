@@ -25,6 +25,7 @@
   "dependencies": {
     "@koa/cors": "^2.2.2",
     "ali-oss": "^6.1.0",
+    "ice": "^3.7.4",
     "koa": "^2.5.3",
     "koa-body": "^4.0.8",
     "koa-bodyparser": "^4.2.1",
@@ -35,11 +36,12 @@
     "koa-static": "^5.0.0",
     "koa2-cors": "^2.0.6",
     "md5": "^2.2.1",
-    "mysql": "^2.16.0",
+    "mysql": "^2.18.1",
     "node-xlsx": "^0.14.1",
     "qcloudsms_js": "^0.1.1",
     "qs": "^6.6.0",
     "querystring": "^0.2.0",
+    "url": "^0.11.0",
     "we-validator": "^2.1.10"
   },
   "devDependencies": {

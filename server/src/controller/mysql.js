@@ -5,7 +5,7 @@ class MysqlController {
         ctx.body = {
             status: 200,
             statusText: 'excel',
-            currentAuthority: mysqlService.mysqlConnect(),
+            currentAuthority: await mysqlService.mysqlConnect(),
         }
     }
 }
