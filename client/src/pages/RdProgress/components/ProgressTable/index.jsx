@@ -98,7 +98,7 @@ export default class ProgressTable extends Component {
       .then(res=>{
           console.log('res=>',res);
           _this.delete(record.id)
-          emitter.emit("callMe", record.id)
+          emitter.emit("callMe", {'id':record.id, 'progressId': record.progressId, 'progress': record.progressPercent})
       })
       .catch(error=>{
           console.log('res=>',error);            

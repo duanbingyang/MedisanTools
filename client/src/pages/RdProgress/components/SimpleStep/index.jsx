@@ -74,21 +74,28 @@ export default class SimpleStep extends Component {
     const _this = this;
     // 声明一个自定义事件
     // 在组件装载完成以后
-    this.eventEmitter = emitter.addListener("callMe", (id)=>{
-      
+    this.eventEmitter = emitter.addListener("callMe", (obj)=>{
       let Arr = []
+      let _currentObj = this.state.currentObj
+      let _progressIdSplit = obj.progressId.split('.')
       for(let i = 0; i < this.state.activeKey.length; i++){
         let newData = this.state.activeKey[i].filter(function(item) {
-          return item['id'] != id;
+          return item['id'] != obj.id;
         });
         if(newData && newData.length) {
           Arr.push(newData)
         }
       }
-
-
+      if(obj.progress == 100){
+        if(_progressIdSplit[1]){
+          _currentObj['current' + _progressIdSplit[0]] = _currentObj['current' + _progressIdSplit] - 1
+        }else{
+          _currentObj.currentMain = _currentObj.currentMain - 1
+        }
+      }
       this.setState({
-        activeKey: Arr
+        activeKey: Arr,
+        currentObj: _currentObj
       })
     });
     this.initData(this.state.pageData)
