@@ -8,7 +8,9 @@ import IceLabel from '@icedesign/label'
 import FilterForm from './Filter'
 import data from './data'
 import styles from './index.module.scss'
-const rootUrl = 'http://localhost:3000'
+// const rootUrl = 'http://localhost:3000'
+//腾讯云服务地址
+const rootUrl = 'http://49.234.40.20:3000'  
 
 export default class EnhanceTable extends Component {
 

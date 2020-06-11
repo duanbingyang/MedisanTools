@@ -3,7 +3,9 @@ import axios from 'axios'
 import URL from 'url'
 import SimpleStep from './components/SimpleStep'
 import ProgressTable from './components/ProgressTable'
-const rootUrl = 'http://192.168.31.59:3000'
+// const rootUrl = 'http://192.168.31.59:3000'   
+//腾讯云服务地址
+const rootUrl = 'http://49.234.40.20:3000'  
 let pageData = ''
 
 export default class RdPrograss extends Component {

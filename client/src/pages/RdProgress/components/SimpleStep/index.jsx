@@ -70,6 +70,7 @@ export default class SimpleStep extends Component {
 
   componentDidMount() {
     const _this = this;
+    console.log(this.props.componentData)
     this.initData(this.props.componentData)
   }
 
@@ -93,10 +94,10 @@ export default class SimpleStep extends Component {
       let nextProgressId = i < arr.length-1 ? nextArrItem['progressId'] : ''
       let nextProgressIdSplit = i < arr.length-1 ?  nextProgressId.split('.') : []
 
-      if(progressIdSplit[0] != lastProgressIdSign) {
-        initArr.push(itemArr)
-        itemArr = []
-      }
+      // if(progressIdSplit[0] != lastProgressIdSign) {
+      //   initArr.push(itemArr)
+      //   itemArr = []
+      // }
 
       itemArr.push({
         'id': arrItem.id,
@@ -116,6 +117,9 @@ export default class SimpleStep extends Component {
           if(progressIdSplit[0] != nextProgressIdSplit[0]) {
             //无子节点的主节点
             mainSign ? thisCurrentObj['currentMain'] = thisCurrentObj['currentMain'] ? thisCurrentObj['currentMain'] + 1 : 1 : ''
+            
+            initArr.push(itemArr)
+            itemArr = []
           }
         }else{
           mainSign = false
@@ -134,6 +138,11 @@ export default class SimpleStep extends Component {
                   thisCurrentObj['current' + progressIdSplit[0]] = thisCurrentObj['current' + progressIdSplit[0]] ? parseInt(thisCurrentObj['current' + progressIdSplit[0]]) + 1 : 2
                   thisCurrentMain = thisCurrentMain + 1
                   mainSign ? thisCurrentObj['currentMain'] = thisCurrentObj['currentMain'] ? thisCurrentObj['currentMain'] + 1 : 1 : ''
+
+                  
+                  initArr.push(itemArr)
+                  itemArr = []
+
               }
             }
           }else{
@@ -162,9 +171,10 @@ export default class SimpleStep extends Component {
   };
 
   mainProgress = (arr) => {
-  let Options =arr.map((station, i)=> {
-    return <StepItem title='' key={i} onClick={this.onClick} />
-  })
+    console.log(arr)
+    let Options =arr.map((station, i)=> {
+      return <StepItem title='' key={i} onClick={this.onClick} />
+    })
     return (<Step current={ this.state.currentObj.currentMain ? this.state.currentObj.currentMain : 0 } >
       {Options}
     </Step>)
@@ -173,7 +183,7 @@ export default class SimpleStep extends Component {
   childProgress = (arr) => {
     let Options = []
     let childProgressItem = arr.map((station, i) => {
-      if( station.length != 1){
+      if( station.length > 1){
         Options.push(<div key={'childProgress' + i} className="RdStepBox" style={{display: 'inline-block', verticalAlign: 'top', width: i==arr.length-1 ? 'auto' : parseInt(100/arr.length) + '%'}}><Step shape="dot" direction="ver" current={ this.state.currentObj['current' + station[0].progressId] ? this.state.currentObj['current' + station[0].progressId] : 0 } >{station.map((indexData, i) => <StepItem key={'node' + i} title={indexData.progressId + ' ' + indexData.projectName} onClick={this.onClick} />)}</Step></div>)
       }else{
         Options.push(<div key={'childProgress' + i} className="RdStepBox" style={{display: 'inline-block', verticalAlign: 'top', visibility:'hidden', width: i==arr.length-1 ? 'auto' : parseInt(100/arr.length) + '%'}}><Step shape="dot" direction="ver" ></Step></div>)

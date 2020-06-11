@@ -186,17 +186,17 @@ const asideMenuConfig = [
         icon: 'home',
       },
       {
-        name: '项目进度节点详情',
+        name: '***项目进度节点详情',
         path: '/rdprogress',
         icon: 'home',
       },
       {
-        name: '增加进度节点',
+        name: '***增加进度节点',
         path: '/rdprogressadd',
         icon: 'home',
       },
       {
-        name: '编辑进度节点',
+        name: '***编辑进度节点',
         path: '/rdprogressedit',
         icon: 'home',
       },
