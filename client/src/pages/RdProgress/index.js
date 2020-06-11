@@ -38,7 +38,6 @@ export default class RdPrograss extends Component {
   }
 
   nodeNumCallback(nodeNum) {
-    console.log(nodeNum, 'num===============')
     this.setState({
       currentStep: nodeNum
     })

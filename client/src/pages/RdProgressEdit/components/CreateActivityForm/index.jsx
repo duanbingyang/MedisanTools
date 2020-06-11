@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { createBrowserHistory } from 'history'
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import qs from 'qs';
@@ -20,8 +19,7 @@ import {
 } from '@alifd/next';
 // const rootUrl = 'http://localhost:3000'
 //腾讯云服务地址
-const rootUrl = 'http://49.234.40.20:3000'  
-const pageHistory = createBrowserHistory()
+const rootUrl = 'http://49.234.40.20:3000'
 
 const { Row, Col } = Grid;
 
@@ -162,17 +160,6 @@ export default class Index extends Component {
                 requiredMessage="项目节点计划时间必须填写">
                 <DatePicker style={{width: '100%'}} name="progressTime" />
               </FormItem>
-              
-              {/* <FormItem {...formItemLayout} label="项目节点计划时间：">
-                <Select
-                  name="area"
-                  dataSource={[
-                    { label: '区域一', value: 'location1' },
-                    { label: '区域二', value: 'location2' },
-                  ]}
-                />
-              </FormItem> */}
-
 
               <FormItem {...formItemLayout} label="项目主要实施节点："
                 required
@@ -207,32 +194,6 @@ export default class Index extends Component {
               >
                 <Input name="progressPercent" className={styles.inputWidth} />
               </FormItem>
-
-              {/* <FormItem {...formItemLayout} label="活动性质：">
-                <CheckboxGroup
-                  name="type"
-                  dataSource={[
-                    { label: '美食线上活动', value: '美食线上活动' },
-                    { label: '地推活动', value: '地推活动' },
-                    { label: '线下主题活动', value: '线下主题活动' },
-                    { label: '单纯品牌曝光', value: '单纯品牌曝光' },
-                  ]}
-                />
-              </FormItem>
-
-              <FormItem {...formItemLayout} label="特殊资源：">
-                <RadioGroup
-                  name="resource"
-                  dataSource={[
-                    { label: '线上品牌商赞助', value: '线上品牌商赞助' },
-                    { label: '线下场地免费', value: '线下场地免费' },
-                  ]}
-                />
-              </FormItem>
-
-              <FormItem {...formItemLayout} label="活动形式：">
-                <Input.TextArea name="extra" className={styles.inputWidth} />
-              </FormItem> */}
               <FormItem {...formItemLayout} label=" ">
                 <Form.Submit type="primary" validate onClick={this.submit}>
                   确认修改

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Step, Button } from '@alifd/next';
 import styles from './index.module.scss';
+import emitter from "./../../ev"
 
 const { Item: StepItem } = Step;
 const { Group: ButtonGroup } = Button;
@@ -19,6 +20,7 @@ export default class SimpleStep extends Component {
       totalFinishSign: true,
       itemFinishSign: true,
       currentObj: {},
+      pageData: this.props.componentData,
       activeKey: [
         [
           {
@@ -70,22 +72,44 @@ export default class SimpleStep extends Component {
 
   componentDidMount() {
     const _this = this;
-    console.log(this.props.componentData)
-    this.initData(this.props.componentData)
+    // 声明一个自定义事件
+    // 在组件装载完成以后
+    this.eventEmitter = emitter.addListener("callMe", (id)=>{
+      
+      let Arr = []
+      for(let i = 0; i < this.state.activeKey.length; i++){
+        let newData = this.state.activeKey[i].filter(function(item) {
+          return item['id'] != id;
+        });
+        if(newData && newData.length) {
+          Arr.push(newData)
+        }
+      }
+
+
+      this.setState({
+        activeKey: Arr
+      })
+    });
+    this.initData(this.state.pageData)
   }
+
+    // 组件销毁前移除事件监听
+    componentWillUnmount(){
+        emitter.removeListener('callMe', this.eventEmitter._events.callMe);
+    }
 
   initData(arr) {
     let initArr = []
     let itemArr = []
     let thisCurrentMain = 0
-    let thisCurrentItem = 0
-    let lastProgressIdSign = '1'
     let thisCurrentObj = {
       currentMain: '',
       current1: '',
     }
     let childSign = true  //子节点进度中断标记，用于前一子节点没完成，但是后边节点已完成的情况
     let mainSign = true   //主节点进度中断标记，用于前一主节点没完成，但是后边节点已完成的情况
+    let mainNodeOfChildNodeAddSign = true   //由于主节点和子节点同在一个数组中，同时主节点的进度与子节点的进度相互独立。所以如果子节点有未完成的，那么图示进度会比实际进度少1，故而以此开关对有子节点的项目增加1平衡差值
     for(let i = 0; i < arr.length; i++) {
       let arrItem = arr[i]
       let progressId = arrItem['progressId']
@@ -94,34 +118,27 @@ export default class SimpleStep extends Component {
       let nextProgressId = i < arr.length-1 ? nextArrItem['progressId'] : ''
       let nextProgressIdSplit = i < arr.length-1 ?  nextProgressId.split('.') : []
 
-      // if(progressIdSplit[0] != lastProgressIdSign) {
-      //   initArr.push(itemArr)
-      //   itemArr = []
-      // }
-
       itemArr.push({
         'id': arrItem.id,
         'progressId': arrItem.progressId,
         'progressPercent': arrItem.progressPercent,
         'projectName': arrItem.projectName
       })
-      
-      // if(!progressIdSplit[1] && arrItem.progressPercent == 100){
-      //   thisCurrentMain = parseInt(progressIdSplit[0])
-      // }
-
 
       if( !progressIdSplit[1] ){
         //主节点
         if( arrItem.progressPercent == 100 ) {
+          //完成的主节点
           if(progressIdSplit[0] != nextProgressIdSplit[0]) {
             //无子节点的主节点
             mainSign ? thisCurrentObj['currentMain'] = thisCurrentObj['currentMain'] ? thisCurrentObj['currentMain'] + 1 : 1 : ''
             
             initArr.push(itemArr)
             itemArr = []
+            mainNodeOfChildNodeAddSign = true
           }
         }else{
+          //未完成的主节点
           if(progressIdSplit[0] != nextProgressIdSplit[0]) {
             initArr.push(itemArr)
             itemArr = []
@@ -131,43 +148,45 @@ export default class SimpleStep extends Component {
         childSign = true
       }else{
         //子节点
+          if(mainNodeOfChildNodeAddSign){
+            thisCurrentObj['current' + progressIdSplit[0]] = thisCurrentObj['current' + progressIdSplit[0]] ? parseInt(thisCurrentObj['current' + progressIdSplit[0]]) + 1 : 1
+            mainNodeOfChildNodeAddSign = false
+          }
           if(arrItem.progressPercent == 100) {
             //完成的子节点
             if(childSign) {
               thisCurrentObj['current' + progressIdSplit[0]] = thisCurrentObj['current' + progressIdSplit[0]] ? parseInt(thisCurrentObj['current' + progressIdSplit[0]]) + 1 : 1
-              if(progressIdSplit[0] == nextProgressIdSplit[0]) {
-                //不是最后一个子节点
-              }else{
-                //最后一个子节点
-                  thisCurrentObj['current' + progressIdSplit[0]] = thisCurrentObj['current' + progressIdSplit[0]] ? parseInt(thisCurrentObj['current' + progressIdSplit[0]]) + 1 : 2
-                  thisCurrentMain = thisCurrentMain + 1
-                  mainSign ? thisCurrentObj['currentMain'] = thisCurrentObj['currentMain'] ? thisCurrentObj['currentMain'] + 1 : 1 : ''
-
-                  
-                  initArr.push(itemArr)
-                  itemArr = []
-
-              }
             }
-          }else{
-          //未完成的子节点
-          if(progressIdSplit[0] == nextProgressIdSplit[0]) {
-            //不是最后一个子节点
-          }else{
-            //最后一个子节点
+            if(progressIdSplit[0] == nextProgressIdSplit[0]) {
+              //不是最后一个子节点
+            }else{
+              //最后一个子节点
+              if(childSign) {
+                thisCurrentObj['current' + progressIdSplit[0]] = thisCurrentObj['current' + progressIdSplit[0]] ? parseInt(thisCurrentObj['current' + progressIdSplit[0]]) + 1 : 2
+                thisCurrentMain = thisCurrentMain + 1
+                mainSign ? thisCurrentObj['currentMain'] = thisCurrentObj['currentMain'] ? thisCurrentObj['currentMain'] + 1 : 1 : ''
+              }
               initArr.push(itemArr)
               itemArr = []
-          }
-          childSign = false
-          mainSign = false
+              mainNodeOfChildNodeAddSign = true
+            }
+            
+          }else{
+            //未完成的子节点
+            if(progressIdSplit[0] == nextProgressIdSplit[0]) {
+            //不是最后一个子节点
+            }else{
+              //最后一个子节点
+              initArr.push(itemArr)
+              itemArr = []
+              mainNodeOfChildNodeAddSign = true
+            }
+            childSign = false
+            mainSign = false
+            
         }
       }
-      lastProgressIdSign = progressIdSplit[0]
-      if(i == arr.length-1) {
-        initArr.push(itemArr)
-      }
     }
-    initArr.pop()
     this.setState({
       activeKey: initArr,
       currentMain: thisCurrentMain,
@@ -183,7 +202,6 @@ export default class SimpleStep extends Component {
   };
 
   mainProgress = (arr) => {
-    console.log(arr)
     let Options =arr.map((station, i)=> {
       return <StepItem title='' key={i} onClick={this.onClick} />
     })
@@ -196,7 +214,29 @@ export default class SimpleStep extends Component {
     let Options = []
     let childProgressItem = arr.map((station, i) => {
       if( station.length > 1){
-        Options.push(<div key={'childProgress' + i} className="RdStepBox" style={{display: 'inline-block', verticalAlign: 'top', width: i==arr.length-1 ? 'auto' : parseInt(100/arr.length) + '%'}}><Step shape="dot" direction="ver" current={ this.state.currentObj['current' + station[0].progressId] ? this.state.currentObj['current' + station[0].progressId] : 0 } >{station.map((indexData, i) => <StepItem key={'node' + i} title={indexData.progressId + ' ' + indexData.projectName} onClick={this.onClick} />)}</Step></div>)
+        Options.push(
+          <div key={'childProgress' + i} 
+            className="RdStepBox" 
+            style={{
+              display: 'inline-block', 
+              verticalAlign: 'top', 
+              width: i==arr.length-1 ? 'auto' : parseInt(100/arr.length) + '%'
+            }}
+          >
+            <Step 
+              shape="dot" 
+              direction="ver" 
+              current={
+                this.state.currentObj['current' + station[0].progressId] ? 
+                this.state.currentObj['current' + station[0].progressId] :
+                this.state.currentObj['current' + station[0].progressId] == 0 ? 
+                this.state.currentObj['current' + station[0].progressId] + 1 :
+                0 } 
+            >
+              {station.map((indexData, i) => <StepItem key={'node' + i} title={indexData.progressId + ' ' + indexData.projectName} onClick={this.onClick} />)}
+            </Step>
+          </div>
+        )
       }else{
         Options.push(<div key={'childProgress' + i} className="RdStepBox" style={{display: 'inline-block', verticalAlign: 'top', visibility:'hidden', width: i==arr.length-1 ? 'auto' : parseInt(100/arr.length) + '%'}}><Step shape="dot" direction="ver" ></Step></div>)
       }

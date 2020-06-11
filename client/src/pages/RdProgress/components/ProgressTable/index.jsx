@@ -3,14 +3,15 @@ import React, { Component } from 'react'
 //without 路由跳转依赖
 import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import moment from 'moment'
 //without 路由跳转依赖结束
+import moment from 'moment'
 import { Table, Progress, Pagination, Button } from '@alifd/next'
 import { Link } from 'react-router-dom'
 import IceContainer from '@icedesign/container'
 import styles from  './index.module.scss'
 import axios from 'axios'
 import qs from 'qs'
+import emitter from "./../../ev"
 // const rootUrl = 'http://localhost:3000'   
 //腾讯云服务地址
 const rootUrl = 'http://49.234.40.20:3000'  
@@ -80,6 +81,8 @@ export default class ProgressTable extends Component {
         pageData.splice(i, 1)
       }
     }
+
+
     this.setState({
       dataSource: pageData
     })
@@ -94,12 +97,18 @@ export default class ProgressTable extends Component {
     axios.post(`${rootUrl}/api/deleteProgressId`, qs.stringify(submitData))
       .then(res=>{
           console.log('res=>',res);
-          _this.delete(record.id)     
+          _this.delete(record.id)
+          emitter.emit("callMe", record.id)
       })
       .catch(error=>{
           console.log('res=>',error);            
       })
   };
+
+  detailClick = (record, e) => {
+    e.preventDefault();
+    this.props.history.push('/rdprogress?id=' + record.id)
+  }
 
   renderOperations = (value, index, record) => {
     return (
@@ -115,7 +124,14 @@ export default class ProgressTable extends Component {
         >
           编辑
         </a>
-        <a href={'http://localhost:4444/#/rdprogress?id=' + record.id} className={styles.operationItem}>
+        {/* <a href={'/#/rdprogress?id=' + record.id} className={styles.operationItem}>
+          详情
+        </a> */}
+        <a 
+          href='#' 
+          className={styles.operationItem}
+          onClick = {this.detailClick.bind(this, record)}
+        >
           详情
         </a>
         <a 

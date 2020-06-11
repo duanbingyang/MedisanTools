@@ -1,18 +1,27 @@
 /* eslint no-underscore-dangle: 0 */
 import React, { Component } from 'react'
+//without 路由跳转依赖
+import { withRouter } from 'react-router-dom'
+import PropTypes from 'prop-types'
+//without 路由跳转依赖结束
 import moment from 'moment'
 import axios from 'axios'
 import { Table, Pagination } from '@alifd/next'
 import IceContainer from '@icedesign/container'
-import IceLabel from '@icedesign/label'
 import FilterForm from './Filter'
-import data from './data'
 import styles from './index.module.scss'
 // const rootUrl = 'http://localhost:3000'
 //腾讯云服务地址
 const rootUrl = 'http://49.234.40.20:3000'  
 
+@withRouter
 export default class EnhanceTable extends Component {
+
+  static propTypes = {
+    match: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+  }
 
   constructor(props) {
     super(props);
@@ -56,10 +65,19 @@ export default class EnhanceTable extends Component {
     );
   };
 
+  renderDepartment = (value, index, record) => {
+    return <span className={styles.title}>{this.optionsParse(record.department)}</span>
+  };
+
   editItem = (record, e) => {
     e.preventDefault();
     // TODO: record 为该行所对应的数据，可自定义操作行为
   };
+
+  detailClick = (record, e) => {
+    e.preventDefault();
+    this.props.history.push('/rdprogress?id=' + record.id)
+  }
 
   renderOperations = (value, index, record) => {
     return (
@@ -75,7 +93,15 @@ export default class EnhanceTable extends Component {
         >
           解决
         </a>
-        <a href={'http://localhost:4444/#/rdprogress?id=' + record.id} className={styles.operationItem}>
+        {/* <a href={'/#/rdprogress?id=' + record.id} className={styles.operationItem}>
+          详情
+        </a> */}
+        <a 
+          // href={'/#/rdprogress?id=' + record.id} 
+          href='#'
+          onClick={this.detailClick.bind(this, record)}
+          className={styles.operationItem}
+        >
           详情
         </a>
         <a href="#" className={styles.operationItem} target="_blank">
@@ -84,6 +110,15 @@ export default class EnhanceTable extends Component {
       </div>
     );
   };
+  
+  optionsParse = (data) => {
+    const model = {
+      location1: '制剂研发部',
+      location2: '包材研发部',
+      location3: '合成研发部'
+    }
+    return model[data]
+  }
 
   render() {
     return (
@@ -120,6 +155,7 @@ export default class EnhanceTable extends Component {
             <Table.Column
               title="所属部门"
               dataIndex="department"
+              cell={this.renderDepartment} 
               width={150}
             />
             <Table.Column

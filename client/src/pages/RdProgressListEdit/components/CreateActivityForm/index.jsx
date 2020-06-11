@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+//without 路由跳转依赖
+import { withRouter } from 'react-router-dom'
+import PropTypes from 'prop-types'
+//without 路由跳转依赖结束
 import moment from 'moment';
 import IceContainer from '@icedesign/container';
 import styles from './index.module.scss';
@@ -33,8 +37,15 @@ const formItemLayout = {
   wrapperCol: { s: "12", l: "10", }
 };
 
+@withRouter
 export default class Index extends Component {
   static displayName = 'Index';
+
+  static propTypes = {
+    match: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+  }
 
   static defaultProps = {};
 
@@ -68,11 +79,13 @@ export default class Index extends Component {
       // 处理表单报错
     }else{
       // 提交当前填写的数据
+      const _this = this
       axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
       value.initTime = moment(value.initTime).unix()
       axios.post(`${rootUrl}/api/addProgress`, qs.stringify(value))
       .then(res=>{
-          console.log('res=>',res);            
+          console.log('res=>',res);
+          _this.props.history.push('/rdprogresslist')         
       })
       .catch(error=>{
           console.log('res=>',error);            
