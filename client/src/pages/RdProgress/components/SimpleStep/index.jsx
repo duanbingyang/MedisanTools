@@ -122,6 +122,10 @@ export default class SimpleStep extends Component {
             itemArr = []
           }
         }else{
+          if(progressIdSplit[0] != nextProgressIdSplit[0]) {
+            initArr.push(itemArr)
+            itemArr = []
+          }
           mainSign = false
         }
         childSign = true
@@ -147,6 +151,13 @@ export default class SimpleStep extends Component {
             }
           }else{
           //未完成的子节点
+          if(progressIdSplit[0] == nextProgressIdSplit[0]) {
+            //不是最后一个子节点
+          }else{
+            //最后一个子节点
+              initArr.push(itemArr)
+              itemArr = []
+          }
           childSign = false
           mainSign = false
         }
@@ -156,6 +167,7 @@ export default class SimpleStep extends Component {
         initArr.push(itemArr)
       }
     }
+    initArr.pop()
     this.setState({
       activeKey: initArr,
       currentMain: thisCurrentMain,
