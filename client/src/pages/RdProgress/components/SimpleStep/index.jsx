@@ -116,7 +116,7 @@ export default class SimpleStep extends Component {
     }
     let childSign = true  //子节点进度中断标记，用于前一子节点没完成，但是后边节点已完成的情况
     let mainSign = true   //主节点进度中断标记，用于前一主节点没完成，但是后边节点已完成的情况
-    let mainNodeOfChildNodeAddSign = true   //由于主节点和子节点同在一个数组中，同时主节点的进度与子节点的进度相互独立。所以如果子节点有未完成的，那么图示进度会比实际进度少1，故而以此开关对有子节点的项目增加1平衡差值
+    // let mainNodeOfChildNodeAddSign = true   //由于主节点和子节点同在一个数组中，同时主节点的进度与子节点的进度相互独立。所以如果子节点有未完成的，那么图示进度会比实际进度少1，故而以此开关对有子节点的项目增加1平衡差值
     for(let i = 0; i < arr.length; i++) {
       let arrItem = arr[i]
       let progressId = arrItem['progressId']
@@ -142,7 +142,7 @@ export default class SimpleStep extends Component {
             
             initArr.push(itemArr)
             itemArr = []
-            mainNodeOfChildNodeAddSign = true
+            // mainNodeOfChildNodeAddSign = true
           }
         }else{
           //未完成的主节点
@@ -155,10 +155,10 @@ export default class SimpleStep extends Component {
         childSign = true
       }else{
         //子节点
-          if(mainNodeOfChildNodeAddSign){
-            thisCurrentObj['current' + progressIdSplit[0]] = thisCurrentObj['current' + progressIdSplit[0]] ? parseInt(thisCurrentObj['current' + progressIdSplit[0]]) + 1 : 1
-            mainNodeOfChildNodeAddSign = false
-          }
+          // if(mainNodeOfChildNodeAddSign){
+            // thisCurrentObj['current' + progressIdSplit[0]] = thisCurrentObj['current' + progressIdSplit[0]] ? parseInt(thisCurrentObj['current' + progressIdSplit[0]]) + 1 : 1
+            // mainNodeOfChildNodeAddSign = false
+          // }
           if(arrItem.progressPercent == 100) {
             //完成的子节点
             if(childSign) {
@@ -175,7 +175,7 @@ export default class SimpleStep extends Component {
               }
               initArr.push(itemArr)
               itemArr = []
-              mainNodeOfChildNodeAddSign = true
+              // mainNodeOfChildNodeAddSign = true
             }
             
           }else{
@@ -186,7 +186,7 @@ export default class SimpleStep extends Component {
               //最后一个子节点
               initArr.push(itemArr)
               itemArr = []
-              mainNodeOfChildNodeAddSign = true
+              // mainNodeOfChildNodeAddSign = true
             }
             childSign = false
             mainSign = false
@@ -210,11 +210,19 @@ export default class SimpleStep extends Component {
 
   mainProgress = (arr) => {
     let Options =arr.map((station, i)=> {
-      return <StepItem title='' key={i} onClick={this.onClick} />
+      console.log(station)
+      console.log(station[0])
+      return <StepItem title={station[0]['progressId'] + ' ' + station[0]['projectName']} key={i} onClick={this.onClick} />
     })
-    return (<Step current={ this.state.currentObj.currentMain ? this.state.currentObj.currentMain : 0 } >
-      {Options}
-    </Step>)
+    return (
+      <Step
+        readOnly
+        current={ this.state.currentObj.currentMain ? this.state.currentObj.currentMain : 0 }
+        style={{marginBottom: '6px'}}
+      >
+        {Options}
+      </Step>
+    )
   }
 
   childProgress = (arr) => {
@@ -231,8 +239,9 @@ export default class SimpleStep extends Component {
             }}
           >
             <Step 
+              readOnly
               shape="dot" 
-              direction="ver" 
+              direction="ver"
               current={
                 this.state.currentObj['current' + station[0].progressId] ? 
                 this.state.currentObj['current' + station[0].progressId] :
@@ -240,7 +249,16 @@ export default class SimpleStep extends Component {
                 this.state.currentObj['current' + station[0].progressId] + 1 :
                 0 } 
             >
-              {station.map((indexData, i) => <StepItem key={'node' + i} title={indexData.progressId + ' ' + indexData.projectName} onClick={this.onClick} />)}
+              {station.map((indexData, i) => {
+                if(!station[i]['progressId'].split('.')[1]){
+                }else{
+                  return <StepItem 
+                    key={'node' + i} 
+                    title={indexData.progressId + ' ' + indexData.projectName} 
+                    onClick={this.onClick} />
+                  }
+                }
+              )}
             </Step>
           </div>
         )

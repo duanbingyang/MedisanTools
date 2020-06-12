@@ -8,5 +8,34 @@
       .RdStepBox:last-child .next-step .next-step-item .next-step-item-body{
           width: 174px!important;
       }
+      .next-step-circle > .next-step-item-process > .next-step-item-container .next-step-item-node-circle{
+        background: #00CB15;
+        border-color: #00CB15;
+        font-weight: 900;
+      }.next-step-dot > .next-step-item-finish > .next-step-item-container .next-step-item-node-circle {
+        background: #FFF;
+        border-color: #00CB15;
+        border-width: 2px;
+      }
+      .next-step-dot > .next-step-item-finish > .next-step-item-container .next-step-item-node {
+        color: #00CB15;
+      }
+      .next-step-dot > .next-step-item-finish .next-step-item-tail-overlay {
+        background: #00CB15;
+      }
+      .next-step-dot > .next-step-item-process > .next-step-item-container .next-step-item-node-circle {
+        background: #00CB15;
+        border-color: #00CB15;
+      }
+      .next-step-circle > .next-step-item-finish > .next-step-item-container .next-step-item-node-circle {
+        background: #FFFFFF;
+        border-color: #00CB15;
+      }
+      .next-step-circle > .next-step-item-finish > .next-step-item-container .next-step-item-node {
+        color: #00CB15;
+      }
+      .next-step-circle > .next-step-item-finish .next-step-item-tail-overlay {
+        background: #00CB15;
+      }
     };
   
