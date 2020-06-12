@@ -85,14 +85,14 @@ export default class EnhanceTable extends Component {
         className="filter-table-operation"
         className={styles.filterTableOperation}
       >
-        <a
+        {/* <a
           href="#"
           className={styles.operationItem}
           target="_blank"
           onClick={this.editItem.bind(this, record)}
         >
           解决
-        </a>
+        </a> */}
         {/* <a href={'/#/rdprogress?id=' + record.id} className={styles.operationItem}>
           详情
         </a> */}
@@ -104,9 +104,9 @@ export default class EnhanceTable extends Component {
         >
           详情
         </a>
-        <a href="#" className={styles.operationItem} target="_blank">
+        {/* <a href="#" className={styles.operationItem} target="_blank">
           分类
-        </a>
+        </a> */}
       </div>
     );
   };
@@ -181,7 +181,7 @@ export default class EnhanceTable extends Component {
             <Table.Column
               title="操作"
               dataIndex="operation"
-              width={150}
+              width={80}
               cell={this.renderOperations}
             />
           </Table>

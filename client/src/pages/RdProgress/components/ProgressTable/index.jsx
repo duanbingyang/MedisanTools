@@ -140,13 +140,13 @@ export default class ProgressTable extends Component {
         {/* <a href={'/#/rdprogress?id=' + record.id} className={styles.operationItem}>
           详情
         </a> */}
-        <a 
+        {/* <a 
           href='#' 
           className={styles.operationItem}
           onClick = {this.detailClick.bind(this, record)}
         >
           详情
-        </a>
+        </a> */}
         <a 
           href="#" 
           className={styles.operationItem}
@@ -208,7 +208,7 @@ export default class ProgressTable extends Component {
             <Table.Column
               title="操作"
               dataIndex="operation"
-              width={160}
+              width={120}
               cell={this.renderOperations}
             />
           </Table>
