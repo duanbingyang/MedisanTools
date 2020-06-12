@@ -4,38 +4,136 @@
       justify-content: center;
       margin: 40px 0 20px;
     };
+    .pageBox{
+      padding-bottom: 10px;
+      position: relative;
+    };
+    .legendBox{
+      width:400px;
+      text-align: center;
+      vertical-align: middle;
+      position: absolute;
+      bottom: 0;
+      margin-left: 50%;
+      left: -200px;
+    };
+    .legend1{
+
+    };
+    .legend2{
+
+    };
+    .legend3{
+
+    };
+    .finishIcon{
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border-radius: 30px;
+      background-color: #FFF;
+      border: 1px solid #00CB15;
+      vertical-align: middle;
+      margin-right: 10px;
+      margin-left: 30px;
+    };
+    .doingIcon{
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border-radius: 30px;
+      background-color: #00CB15;
+      border: 1px solid #00CB15;
+      vertical-align: middle;
+      margin-right: 10px;
+      margin-left: 30px;
+    };
+    .icon{
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border-radius: 30px;
+      background-color: #FFF;
+      border: 1px solid #A0A2AD;
+      vertical-align: middle;
+      margin-right: 10px;
+      margin-left: 30px;
+    };
+
     :global {
       .RdStepBox:last-child .next-step .next-step-item .next-step-item-body{
           width: 174px!important;
       }
-      .next-step-circle > .next-step-item-process > .next-step-item-container .next-step-item-node-circle{
-        background: #00CB15;
-        border-color: #00CB15;
-        font-weight: 900;
-      }.next-step-dot > .next-step-item-finish > .next-step-item-container .next-step-item-node-circle {
-        background: #FFF;
-        border-color: #00CB15;
-        border-width: 2px;
+      .RdStepBox .progressChildNodeDone{
+        .next-step-item-container .next-step-item-node-circle {
+          background: #FFF;
+          border-color: #00CB15;
+          border-width: 2px;
+        }
+        .next-step-item-tail-overlay {
+          background: #00CB15;
+        }
+        .next-step-item-container .next-step-item-node {
+          color: #00CB15;
+        }
       }
-      .next-step-dot > .next-step-item-finish > .next-step-item-container .next-step-item-node {
-        color: #00CB15;
+      .RdStepBox .progressChildNodeDoing{
+        .next-step-item-container .next-step-item-node-circle {
+          background: #00CB15;
+          border-color: #00CB15;
+        }
+        .next-step-item-tail-overlay {
+          background: #C4C6CF;
+        }
       }
-      .next-step-dot > .next-step-item-finish .next-step-item-tail-overlay {
-        background: #00CB15;
+      .RdStepBox .progressChildNode{
+        .next-step-item-container .next-step-item-node-circle {
+          background: #FFFFFF;
+          border-color: #A0A2AD;
+        }
+        .next-step-item-tail-overlay {
+          background: #C4C6CF;
+        }
       }
-      .next-step-dot > .next-step-item-process > .next-step-item-container .next-step-item-node-circle {
-        background: #00CB15;
-        border-color: #00CB15;
+      .container-block .next-step .mainProgressNodeDone{
+        .next-step-item-container .next-step-item-node-circle {
+          background: #FFFFFF;
+          border-color: #00CB15;
+        }
+        .next-icon-select:before {
+          content: "\E632";
+        }
+        .next-step-item-container .next-step-item-node {
+          color: #00CB15;
+        }
+        .next-step-item-tail-overlay {
+          background: #00CB15;
+        }
       }
-      .next-step-circle > .next-step-item-finish > .next-step-item-container .next-step-item-node-circle {
-        background: #FFFFFF;
-        border-color: #00CB15;
+      .container-block .next-step .mainProgressNodeDoing{
+        .next-step-item-container .next-step-item-node {
+          color: #FFFFFF;
+        }
+        .next-step-item-container .next-step-item-node-circle {
+          background: #00CB15;
+          border-color: #00CB15;
+          font-weight: 900;
+        }
+        .next-step-item-tail-overlay {
+          background: #C4C6CF;
+        }
       }
-      .next-step-circle > .next-step-item-finish > .next-step-item-container .next-step-item-node {
-        color: #00CB15;
-      }
-      .next-step-circle > .next-step-item-finish .next-step-item-tail-overlay {
-        background: #00CB15;
+      .container-block .next-step .mainProgressNode{
+        .next-step-item-container .next-step-item-node {
+          color: #666666;
+        }
+        .next-step-item-container .next-step-item-node-circle {
+          background: #FFFFFF;
+          border-color: #A0A2AD;
+        }
+        .next-step-item-tail-overlay {
+          background: #C4C6CF;
+        }
       }
     };
   

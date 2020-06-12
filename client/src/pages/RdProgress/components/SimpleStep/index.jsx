@@ -19,7 +19,6 @@ export default class SimpleStep extends Component {
     this.state = {
       totalFinishSign: true,
       itemFinishSign: true,
-      currentObj: {},
       pageData: this.props.componentData,
       activeKey: [
         [
@@ -76,7 +75,6 @@ export default class SimpleStep extends Component {
     // 在组件装载完成以后
     this.eventEmitter = emitter.addListener("callMe", (obj)=>{
       let Arr = []
-      let _currentObj = this.state.currentObj
       let _progressIdSplit = obj.progressId.split('.')
       for(let i = 0; i < this.state.activeKey.length; i++){
         let newData = this.state.activeKey[i].filter(function(item) {
@@ -86,16 +84,8 @@ export default class SimpleStep extends Component {
           Arr.push(newData)
         }
       }
-      if(obj.progress == 100){
-        if(_progressIdSplit[1]){
-          _currentObj['current' + _progressIdSplit[0]] = _currentObj['current' + _progressIdSplit] - 1
-        }else{
-          _currentObj.currentMain = _currentObj.currentMain - 1
-        }
-      }
       this.setState({
         activeKey: Arr,
-        currentObj: _currentObj
       })
     });
     this.initData(this.state.pageData)
@@ -109,14 +99,6 @@ export default class SimpleStep extends Component {
   initData(arr) {
     let initArr = []
     let itemArr = []
-    let thisCurrentMain = 0
-    let thisCurrentObj = {
-      currentMain: '',
-      current1: '',
-    }
-    let childSign = true  //子节点进度中断标记，用于前一子节点没完成，但是后边节点已完成的情况
-    let mainSign = true   //主节点进度中断标记，用于前一主节点没完成，但是后边节点已完成的情况
-    // let mainNodeOfChildNodeAddSign = true   //由于主节点和子节点同在一个数组中，同时主节点的进度与子节点的进度相互独立。所以如果子节点有未完成的，那么图示进度会比实际进度少1，故而以此开关对有子节点的项目增加1平衡差值
     for(let i = 0; i < arr.length; i++) {
       let arrItem = arr[i]
       let progressId = arrItem['progressId']
@@ -138,11 +120,9 @@ export default class SimpleStep extends Component {
           //完成的主节点
           if(progressIdSplit[0] != nextProgressIdSplit[0]) {
             //无子节点的主节点
-            mainSign ? thisCurrentObj['currentMain'] = thisCurrentObj['currentMain'] ? thisCurrentObj['currentMain'] + 1 : 1 : ''
             
             initArr.push(itemArr)
             itemArr = []
-            // mainNodeOfChildNodeAddSign = true
           }
         }else{
           //未完成的主节点
@@ -150,32 +130,17 @@ export default class SimpleStep extends Component {
             initArr.push(itemArr)
             itemArr = []
           }
-          mainSign = false
         }
-        childSign = true
       }else{
         //子节点
-          // if(mainNodeOfChildNodeAddSign){
-            // thisCurrentObj['current' + progressIdSplit[0]] = thisCurrentObj['current' + progressIdSplit[0]] ? parseInt(thisCurrentObj['current' + progressIdSplit[0]]) + 1 : 1
-            // mainNodeOfChildNodeAddSign = false
-          // }
           if(arrItem.progressPercent == 100) {
             //完成的子节点
-            if(childSign) {
-              thisCurrentObj['current' + progressIdSplit[0]] = thisCurrentObj['current' + progressIdSplit[0]] ? parseInt(thisCurrentObj['current' + progressIdSplit[0]]) + 1 : 1
-            }
             if(progressIdSplit[0] == nextProgressIdSplit[0]) {
               //不是最后一个子节点
             }else{
               //最后一个子节点
-              if(childSign) {
-                thisCurrentObj['current' + progressIdSplit[0]] = thisCurrentObj['current' + progressIdSplit[0]] ? parseInt(thisCurrentObj['current' + progressIdSplit[0]]) + 1 : 2
-                thisCurrentMain = thisCurrentMain + 1
-                mainSign ? thisCurrentObj['currentMain'] = thisCurrentObj['currentMain'] ? thisCurrentObj['currentMain'] + 1 : 1 : ''
-              }
               initArr.push(itemArr)
               itemArr = []
-              // mainNodeOfChildNodeAddSign = true
             }
             
           }else{
@@ -186,38 +151,24 @@ export default class SimpleStep extends Component {
               //最后一个子节点
               initArr.push(itemArr)
               itemArr = []
-              // mainNodeOfChildNodeAddSign = true
             }
-            childSign = false
-            mainSign = false
             
         }
       }
     }
     this.setState({
       activeKey: initArr,
-      currentMain: thisCurrentMain,
-      currentObj: thisCurrentObj,
     })
   }
 
-  onClick = (currentStep) => {
-    this.setState({
-      currentStep,
-    });
-    this.props.nodeClickCallback(currentStep)
-  };
-
   mainProgress = (arr) => {
     let Options =arr.map((station, i)=> {
-      console.log(station)
-      console.log(station[0])
-      return <StepItem title={station[0]['progressId'] + ' ' + station[0]['projectName']} key={i} onClick={this.onClick} />
+      let _thisMainProgressData = parseInt(station[0].progressPercent)
+      return <StepItem className={_thisMainProgressData == 100 ? 'mainProgressNodeDone' : _thisMainProgressData > 0 ? 'mainProgressNodeDoing' : 'mainProgressNode'} title={station[0]['progressId'] + ' ' + station[0]['projectName']} key={i} />
     })
     return (
       <Step
         readOnly
-        current={ this.state.currentObj.currentMain ? this.state.currentObj.currentMain : 0 }
         style={{marginBottom: '6px'}}
       >
         {Options}
@@ -242,20 +193,16 @@ export default class SimpleStep extends Component {
               readOnly
               shape="dot" 
               direction="ver"
-              current={
-                this.state.currentObj['current' + station[0].progressId] ? 
-                this.state.currentObj['current' + station[0].progressId] :
-                this.state.currentObj['current' + station[0].progressId] == 0 ? 
-                this.state.currentObj['current' + station[0].progressId] + 1 :
-                0 } 
             >
               {station.map((indexData, i) => {
+                let progress = indexData.progressPercent ? parseInt(indexData.progressPercent) : 0
                 if(!station[i]['progressId'].split('.')[1]){
                 }else{
                   return <StepItem 
+                    className={progress == 100 ? 'progressChildNodeDone' : progress > 0 ? 'progressChildNodeDoing' : 'progressChildNode'}
                     key={'node' + i} 
                     title={indexData.progressId + ' ' + indexData.projectName} 
-                    onClick={this.onClick} />
+                  />
                   }
                 }
               )}
@@ -270,15 +217,19 @@ export default class SimpleStep extends Component {
   }
 
   render() {
-    const { currentStep } = this.state;
 
     return (
       <IceContainer title="项目节点">
-        
-        {this.mainProgress(this.state.activeKey)}
-
-        <div style={{textAlign: 'center'}} className={styles.nextStep}> 
-          {this.childProgress(this.state.activeKey)}
+        <div className={styles.pageBox}>
+          {this.mainProgress(this.state.activeKey)}
+          <div style={{textAlign: 'center'}} className={styles.nextStep}> 
+            {this.childProgress(this.state.activeKey)}
+          </div>
+          <div className={styles.legendBox}>
+            <span className={styles.legend1}><i className={styles.finishIcon}></i><span>已完成</span></span>
+            <span className={styles.legend2}><i className={styles.doingIcon}></i><span>进行中</span></span>
+            <span className={styles.legend3}><i className={styles.icon}></i><span>未开始</span></span>
+          </div>
         </div>
       </IceContainer>
     );

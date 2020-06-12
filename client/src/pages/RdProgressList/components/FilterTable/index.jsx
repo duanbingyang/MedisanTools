@@ -123,13 +123,13 @@ export default class EnhanceTable extends Component {
   render() {
     return (
       <div className="filter-table">
-        <IceContainer title="项目筛选">
+        {/* <IceContainer title="项目筛选">
           <FilterForm
             onChange={this.filterFormChange}
             onSubmit={this.filterTable}
             onReset={this.resetFilter}
           />
-        </IceContainer>
+        </IceContainer> */}
         <IceContainer>
           <Table
             dataSource={this.state.value}
@@ -185,9 +185,9 @@ export default class EnhanceTable extends Component {
               cell={this.renderOperations}
             />
           </Table>
-          <div className={styles.paginationWrapper}>
+          {/* <div className={styles.paginationWrapper}>
             <Pagination />
-          </div>
+          </div> */}
         </IceContainer>
       </div>
     );

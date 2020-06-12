@@ -16,6 +16,8 @@ import {
   Radio,
   Grid,
   Form,
+  Field,
+  NumberPicker,
 } from '@alifd/next';
 // const rootUrl = 'http://localhost:3000'
 //腾讯云服务地址
@@ -45,7 +47,7 @@ export default class Index extends Component {
   }
 
   static defaultProps = {};
-
+  field = new Field(this)
   constructor(props) {
     super(props);
     this.state = {
@@ -59,12 +61,13 @@ export default class Index extends Component {
         progressRealMoney: 0,
         progressDeadline: '',
         progressDeadlineDetail: '',
-        progressPercent: '',
+        progressPercent: 0,
       },
     };
   }
 
-  componentDidMount() {
+
+  componentWillMount() {
     const _this = this
     let id = this.props.location.state.dataId
     let pageId = this.props.location.state.pageId
@@ -72,9 +75,10 @@ export default class Index extends Component {
       .then(res=>{
           console.log('res=>',res)
           let pageData = res.data.data[0]
-          pageData.progressDeadline = moment(parseInt(pageData.progressDeadline)*1000).format("YYYY-MM-DD")
+          pageData.progressDeadline = pageData.progressDeadline && !isNaN(pageData.progressDeadline) ? moment(parseInt(pageData.progressDeadline)*1000).format("YYYY-MM-DD") : ''
           pageData.progressTime = moment(parseInt(pageData.progressTime)*1000).format("YYYY-MM-DD")
-
+          _this.progressDeadline = pageData.progressDeadline
+          _this.progressRealMoney = pageData.progressRealMoney
           _this.setState({
             value: res.data.data[0]
           })
@@ -134,6 +138,7 @@ export default class Index extends Component {
   };
 
   render() {
+    const init = this.field.init;
     return (
       <div className="create-activity-form">
         <IceContainer title="项目进度增加节点" className={styles.container}>
@@ -145,44 +150,44 @@ export default class Index extends Component {
                 required
                 requiredMessage="项目名称必须填写"
               >
-                <Input name="projectName" className={styles.inputWidth} />
+                <Input disabled name="projectName" className={styles.inputWidth} />
               </FormItem>
 
               <FormItem {...formItemLayout} label="项目节点序号："
                 required
                 requiredMessage="项目节点序号必须填写"
               >
-                <Input name="progressId" className={styles.inputWidth} />
+                <Input disabled name="progressId" className={styles.inputWidth} />
               </FormItem>
 
               <FormItem {...formItemLayout} label="项目节点计划时间：" 
                 required
                 requiredMessage="项目节点计划时间必须填写">
-                <DatePicker style={{width: '100%'}} name="progressTime" />
+                <DatePicker disabled style={{width: '100%'}} name="progressTime" />
               </FormItem>
 
               <FormItem {...formItemLayout} label="项目主要实施节点："
                 required
                 requiredMessage="项目主要实施节点必须填写"
               >
-                <Input name="progressDetail" className={styles.inputWidth} />
+                <Input disabled name="progressDetail" className={styles.inputWidth} />
               </FormItem>
 
               <FormItem {...formItemLayout} label="项目节点计划费用："
                 required
                 requiredMessage="项目节点计划费用必须填写"
               >
-                <Input name="progressMoney" className={styles.inputWidth} />
+                <Input disabled name="progressMoney" className={styles.inputWidth} />
               </FormItem>
 
               <FormItem {...formItemLayout} label="项目节点实际费用："
               >
-                <Input name="progressRealMoney" className={styles.inputWidth} />
+                <Input disabled={ this.progressRealMoney != '0' ? true : false } name="progressRealMoney" className={styles.inputWidth} />
               </FormItem>
               
               <FormItem {...formItemLayout} label="项目节点完成时间：" 
               >
-                <DatePicker name="progressDeadline" style={{width: '100%'}} />
+                <DatePicker disabled={this.progressDeadline ? true : false} name="progressDeadline" style={{width: '100%'}} />
               </FormItem>
               
               <FormItem {...formItemLayout} label="项目节点完成情况："
@@ -192,7 +197,7 @@ export default class Index extends Component {
 
               <FormItem {...formItemLayout} label="项目节点完成百分比："
               >
-                <Input name="progressPercent" className={styles.inputWidth} />
+                <NumberPicker min={0} max={100} name="progressPercent" />
               </FormItem>
               <FormItem {...formItemLayout} label=" ">
                 <Form.Submit type="primary" validate onClick={this.submit}>

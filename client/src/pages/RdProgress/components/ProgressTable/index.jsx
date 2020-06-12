@@ -30,19 +30,12 @@ export default class ProgressTable extends Component {
     super(props);
     this.state = {
       dataSource: props.componentData,
-      current: 1,
     };
   }
 
   renderCellProgress = (value) => (
     <Progress percent={parseInt(value, 10)} />
   );
-
-  onPageChange = (pageNo) => {
-    this.setState({
-      current: pageNo,
-    });
-  };
 
   addProgressNode = () => {
     const { history } = this.props;
@@ -55,7 +48,7 @@ export default class ProgressTable extends Component {
   renderTime = (value) => {
     return (
       <div className={styles.titleWrapper}>
-        <span className={styles.title}>{moment(parseInt(value)*1000).format("YYYY-MM-DD")}</span>
+        <span className={styles.title}>{value && !isNaN(value)? moment(parseInt(value)*1000).format("YYYY-MM-DD") : ''}</span>
       </div>
     );
   };
@@ -108,6 +101,26 @@ export default class ProgressTable extends Component {
   detailClick = (record, e) => {
     e.preventDefault();
     this.props.history.push('/rdprogress?id=' + record.id)
+  }
+
+  renderProgressStatus= (value, index, record) => {
+    const _progressPlanTime = this.state.dataSource[index]['progressTime']
+    const _progressFinishTime = this.state.dataSource[index]['progressDeadline'] && !isNaN(this.state.dataSource[index]['progressDeadline']) ? this.state.dataSource[index]['progressDeadline'] : 0
+    const _progressPlanMoney = this.state.dataSource[index]['progressMoney']
+    const _progressrealMoney = this.state.dataSource[index]['progressRealMoney']
+    const jsx = []
+    let i = 0
+    if(_progressPlanMoney - _progressrealMoney < 0) {
+      jsx.push(<span key={i} className={styles.overMoney}>超预算</span>)
+      i++
+    }
+    if(_progressPlanTime - _progressFinishTime <= 0){
+      jsx.push(<span key={i} className={styles.overTime}>延期</span>)
+      i++
+    }
+    return (
+    <div>{jsx}</div>
+    )
   }
 
   renderOperations = (value, index, record) => {
@@ -166,18 +179,17 @@ export default class ProgressTable extends Component {
             dataSource={this.state.dataSource}
           >
             <Table.Column title="序号" dataIndex="progressId" width={80} />
-            <Table.Column title="项目名" dataIndex="projectName" width={200} />
-            <Table.Column title="项目节点计划时间"
+            <Table.Column title="节点名" dataIndex="projectName" width={200} />
+            <Table.Column title="项目节点计划完成时间"
               dataIndex="progressTime"
-              width={140}
+              width={160}
               cell={this.renderTime}
             />
-            <Table.Column title="项目主要实施节点" dataIndex="progressDetail" width={300} />
             <Table.Column title="项目节点计划费用" dataIndex="progressMoney" width={140} />
             <Table.Column title="项目节点实际费用" dataIndex="progressRealMoney" width={140} />
-            <Table.Column title="项目节点完成时间"
+            <Table.Column title="项目节点实际完成时间"
               dataIndex="progressDeadline"
-              width={140}
+              width={160}
               cell={this.renderTime}
             />
             <Table.Column title="项目节点完成情况" dataIndex="progressDeadlineDetail" width={140} />
@@ -186,6 +198,12 @@ export default class ProgressTable extends Component {
               dataIndex="progressPercent"
               cell={this.renderCellProgress}
               width={300}
+            />
+            <Table.Column 
+              title="项目状态" 
+              dataIndex="progressDetail" 
+              width={140} 
+              cell={this.renderProgressStatus}
             />
             <Table.Column
               title="操作"

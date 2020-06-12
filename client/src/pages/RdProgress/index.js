@@ -48,7 +48,7 @@ export default class RdPrograss extends Component {
       !this.state.value ? "loading" : <div className="rd-prograss-page">
         <SimpleStep componentData={this.state.value} pageId={this.state.pageId} nodeClickCallback={this.nodeNumCallback.bind(this)}/>
         {/* 进度条表格 */}
-        <ProgressTable componentData={this.state.value} pageId={this.state.pageId} currentStep={this.state.currentStep}/>
+        <ProgressTable componentData={this.state.value} pageId={this.state.pageId} />
       </div>
     );
   }

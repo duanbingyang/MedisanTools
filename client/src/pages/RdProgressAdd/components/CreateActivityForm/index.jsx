@@ -16,6 +16,7 @@ import {
   Radio,
   Grid,
   Form,
+  NumberPicker,
 } from '@alifd/next';
 // const rootUrl = 'http://localhost:3000'   
 //腾讯云服务地址
@@ -59,7 +60,7 @@ export default class Index extends Component {
         progressRealMoney: 0,
         progressDeadline: '',
         progressDeadlineDetail: '',
-        progressPercent: '',
+        progressPercent: 0,
       },
     };
   }
@@ -183,7 +184,7 @@ export default class Index extends Component {
 
               <FormItem {...formItemLayout} label="项目节点完成百分比："
               >
-                <Input name="progressPercent" className={styles.inputWidth} />
+                <NumberPicker min={0} max={100} name="progressPercent" />
               </FormItem>
               <FormItem {...formItemLayout} label=" ">
                 <Form.Submit type="primary" validate onClick={this.submit}>
