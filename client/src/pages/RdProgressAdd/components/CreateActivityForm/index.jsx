@@ -52,8 +52,8 @@ export default class Index extends Component {
     this.state = {
       pageId: '',
       value: {
-        projectName: 'test',
-        progressId: '1.1',
+        projectName: '',
+        progressId: '',
         progressTime: '',
         progressDetail: '',
         progressMoney: 0,
@@ -122,23 +122,23 @@ export default class Index extends Component {
             value={this.state.value}
             onChange={this.onFormChange}
           >
-              <FormItem {...formItemLayout} label="项目名称："
+              <FormItem {...formItemLayout} label="节点名称："
                 required
-                requiredMessage="项目名称必须填写"
+                requiredMessage="节点名称必须填写"
               >
                 <Input name="projectName" className={styles.inputWidth} />
               </FormItem>
 
-              <FormItem {...formItemLayout} label="项目节点序号："
+              <FormItem {...formItemLayout} label="节点序号："
                 required
-                requiredMessage="项目节点序号必须填写"
+                requiredMessage="节点序号必须填写"
               >
                 <Input name="progressId" className={styles.inputWidth} />
               </FormItem>
 
-              <FormItem {...formItemLayout} label="项目节点计划时间：" 
+              <FormItem {...formItemLayout} label="计划完成时间：" 
                 required
-                requiredMessage="项目节点计划时间必须填写">
+                requiredMessage="计划时间必须填写">
                 <DatePicker style={{width: '100%'}} name="progressTime" />
               </FormItem>
               
@@ -153,36 +153,36 @@ export default class Index extends Component {
               </FormItem> */}
 
 
-              <FormItem {...formItemLayout} label="项目主要实施节点："
+              <FormItem {...formItemLayout} label="主要实施节点："
                 required
-                requiredMessage="项目主要实施节点必须填写"
+                requiredMessage="主要实施节点必须填写"
               >
                 <Input name="progressDetail" className={styles.inputWidth} />
               </FormItem>
 
-              <FormItem {...formItemLayout} label="项目节点计划费用："
+              <FormItem {...formItemLayout} label="计划费用："
                 required
-                requiredMessage="项目节点计划费用必须填写"
+                requiredMessage="计划费用必须填写"
               >
                 <Input name="progressMoney" className={styles.inputWidth} />
               </FormItem>
 
-              <FormItem {...formItemLayout} label="项目节点实际费用："
+              <FormItem {...formItemLayout} label="实际费用："
               >
                 <Input name="progressRealMoney" className={styles.inputWidth} />
               </FormItem>
               
-              <FormItem {...formItemLayout} label="项目节点完成时间：" 
+              <FormItem {...formItemLayout} label="实际完成时间：" 
               >
                 <DatePicker name="progressDeadline" style={{width: '100%'}} />
               </FormItem>
               
-              <FormItem {...formItemLayout} label="项目节点完成情况："
+              <FormItem {...formItemLayout} label="完成情况："
               >
                 <Input name="progressDeadlineDetail" className={styles.inputWidth} />
               </FormItem>
 
-              <FormItem {...formItemLayout} label="项目节点完成百分比："
+              <FormItem {...formItemLayout} label="完成百分比："
               >
                 <NumberPicker min={0} max={100} name="progressPercent" />
               </FormItem>

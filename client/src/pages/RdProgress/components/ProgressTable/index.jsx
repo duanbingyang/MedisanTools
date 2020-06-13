@@ -180,27 +180,27 @@ export default class ProgressTable extends Component {
           >
             <Table.Column title="序号" dataIndex="progressId" width={80} />
             <Table.Column title="节点名" dataIndex="projectName" width={200} />
-            <Table.Column title="项目节点计划完成时间"
+            <Table.Column title="计划完成时间"
               dataIndex="progressTime"
               width={160}
               cell={this.renderTime}
             />
-            <Table.Column title="项目节点计划费用" dataIndex="progressMoney" width={140} />
-            <Table.Column title="项目节点实际费用" dataIndex="progressRealMoney" width={140} />
-            <Table.Column title="项目节点实际完成时间"
+            <Table.Column title="实际完成时间"
               dataIndex="progressDeadline"
               width={160}
               cell={this.renderTime}
             />
-            <Table.Column title="项目节点完成情况" dataIndex="progressDeadlineDetail" width={140} />
+            <Table.Column title="计划费用" dataIndex="progressMoney" width={140} />
+            <Table.Column title="实际费用" dataIndex="progressRealMoney" width={140} />
+            <Table.Column title="完成情况" dataIndex="progressDeadlineDetail" width={140} />
             <Table.Column
-              title="项目节点进度"
+              title="节点进度"
               dataIndex="progressPercent"
               cell={this.renderCellProgress}
               width={300}
             />
             <Table.Column 
-              title="项目状态" 
+              title="节点状态" 
               dataIndex="progressDetail" 
               width={140} 
               cell={this.renderProgressStatus}

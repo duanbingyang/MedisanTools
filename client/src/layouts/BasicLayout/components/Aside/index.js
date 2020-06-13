@@ -45,6 +45,7 @@ export default class Aside extends Component {
    * 左侧菜单收缩切换
    */
   onMenuClick = () => {
+    console.log(123455)
     this.toggleMenu();
   };
 
@@ -145,13 +146,11 @@ export default class Aside extends Component {
       <div
         className={cx('ice-design-layout-aside', { 'open-drawer': openDrawer })}
       >
-        {isMobile && <Logo />}
-
-        {isMobile && !openDrawer && (
-          <a className="menu-btn" onClick={this.toggleMenu}>
-            <Icon type="calendar" size="small" />
-          </a>
-        )}
+        <Logo />
+        
+        <a className="menu-btn" onClick={this.toggleMenu}>
+          <Icon type="calendar" size="small" />
+        </a>
 
         <Nav
           style={{ width: 200 }}

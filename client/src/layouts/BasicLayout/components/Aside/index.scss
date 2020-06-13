@@ -1,5 +1,12 @@
 .ice-layout {
   .ice-design-layout-aside {
+    position: fixed;
+    left: -256px;
+    top: 0px;
+    bottom: 0;
+    padding: 0 20px;
+    background: #2e323e !important;
+    z-index: 9999;
     .next-nav,
     .next-nav-sub-nav-item {
       background: transparent;
@@ -37,6 +44,32 @@
       }
     }
   }
+  .open-drawer {
+    transform: translateX(256px);
+    .logo {
+      width: 200px;
+      margin: 20px 0;
+      text-align: center;
+    }
+    .menu-btn {
+      position: fixed;
+      left: 0;
+      top: 22px;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      border-radius: 0 6px 6px 0;
+      color: #fff;
+      background: #2077ff;
+      text-align: center;
+      cursor: pointer;
+      z-index: 9;
+      text-decoration: none;
+      &:hover {
+        color: #e7e7e7;
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 1199px) {
@@ -51,13 +84,6 @@
       z-index: 9999;
     }
 
-    .open-drawer {
-      transform: translateX(256px);
-      .logo {
-        width: 200px;
-        margin: 20px 0;
-        text-align: center;
-      }
-    }
+    
   }
 }

@@ -151,37 +151,6 @@ export default class Index extends Component {
               >
                 <Input name="money" className={styles.inputWidth} />
               </FormItem>
-
-              {/* <FormItem {...formItemLayout} label="即时配送：">
-                <Switch name="delivery" />
-              </FormItem> */}
-
-              {/* <FormItem {...formItemLayout} label="活动性质：">
-                <CheckboxGroup
-                  name="type"
-                  dataSource={[
-                    { label: '美食线上活动', value: '美食线上活动' },
-                    { label: '地推活动', value: '地推活动' },
-                    { label: '线下主题活动', value: '线下主题活动' },
-                    { label: '单纯品牌曝光', value: '单纯品牌曝光' },
-                  ]}
-                />
-              </FormItem> */}
-
-              {/* <FormItem {...formItemLayout} label="特殊资源：">
-                <RadioGroup
-                  name="resource"
-                  dataSource={[
-                    { label: '线上品牌商赞助', value: '线上品牌商赞助' },
-                    { label: '线下场地免费', value: '线下场地免费' },
-                  ]}
-                />
-              </FormItem> */}
-
-              {/* <FormItem {...formItemLayout} label="活动形式：">
-                <Input.TextArea name="extra" className={styles.inputWidth} />
-              </FormItem> */}
-
               <FormItem {...formItemLayout} label=" ">
                 <Form.Submit type="primary" validate onClick={this.submit}>
                   立即创建
