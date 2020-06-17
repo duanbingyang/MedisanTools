@@ -13,6 +13,17 @@ class MysqlController {
         }
     }
 
+    async progressAudit(ctx) {
+        const returnData = await mysqlService.progressAudit(ctx)
+        console.log(returnData)
+        
+        ctx.body = {
+            code: 0,
+            data: returnData,
+            msg: '请求成功',
+        }
+    }
+
     
     async selectProgressNodeUseId(ctx) {
         const returnData = await mysqlService.selectProgressNodeUseId(ctx)

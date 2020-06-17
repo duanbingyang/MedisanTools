@@ -48,6 +48,15 @@ class MysqlService {
 
         return getMysqlConnectionData(sql)
     }
+    
+    async progressAudit(obj) {
+        const url = obj.request.url
+        const data = obj.request.body
+        console.log(data)
+        const sql = `UPDATE ${mysqlTableName} SET progressAudit=${data.progressAudit} WHERE id = ${data.id}`
+        console.log(sql)
+        return getMysqlPoolData(sql)
+    }
 
     async selectProgressNodeUseId(obj) {
         const url = obj.request.url

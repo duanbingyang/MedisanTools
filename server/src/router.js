@@ -35,4 +35,5 @@ module.exports = (router) => {
     .post('/deleteProgressId', RD_progress_node.deleteProgressNodeUseId)
     .post('/editProgressNode', RD_progress_node.editProgressNode)
     .get('/selectProgressNodeUseId', RD_progress_node.selectProgressNodeUseId)
+    .post('/auth', RD_progress_node.progressAudit)
 };

@@ -52,8 +52,19 @@ class MysqlService {
     async projectListUseId(obj) {
         const url = obj.request.url
         const data = URL.parse(url, true).query
+        let sql
+        if(data){
+            if(data.id){
+                sql = `SELECT * FROM ${mysqlTableName} WHERE ID = ${data.id}`
+            }else if(data.viewCode){
+                sql = `SELECT * FROM ${mysqlTableName} WHERE viewCode = '${data.viewCode}'`
+            }else{
+                return false
+            }
+        }else{
+            return false
+        }
         console.log(data)
-        const sql = `SELECT * FROM ${mysqlTableName} WHERE ID = ${data.id}`
         console.log(sql)
         return getMysqlPoolData(sql)
     }
