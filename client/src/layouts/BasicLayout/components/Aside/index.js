@@ -45,7 +45,6 @@ export default class Aside extends Component {
    * 左侧菜单收缩切换
    */
   onMenuClick = () => {
-    console.log(123455)
     this.toggleMenu();
   };
 
