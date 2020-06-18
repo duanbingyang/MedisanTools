@@ -15,7 +15,6 @@ class MysqlService {
     }
 
     async given(obj) {
-        console.log(obj)
         const findSql = `SELECT COUNT(*) FROM ${mysqlTableName} WHERE phone = ${obj.phone}`
         const phoneList = await getMysqlPoolData(findSql)
         const phoneRepeatNum = phoneList[0]['COUNT(*)']
@@ -25,7 +24,6 @@ class MysqlService {
         const sql = `UPDATE ${mysqlTableName} 
                     SET given = ${obj.given}
                     WHERE phone = ${obj.phone}`
-        console.log(sql)
         return getMysqlPoolData(sql)
     }
 
@@ -52,7 +50,6 @@ class MysqlService {
     async remove() {
         return await mysqlConnection.query('SELECT * FROM test', function (error, results, fields) {
             if (error) throw error;
-            console.log('The solution is: ===================================', results);
             return results[0];
         });
     }
@@ -60,7 +57,6 @@ class MysqlService {
     async modify() {
         return await mysqlConnection.query('SELECT * FROM test', function (error, results, fields) {
             if (error) throw error;
-            console.log('The solution is: ===================================', results);
             return results[0];
         });
     }

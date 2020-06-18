@@ -11,16 +11,12 @@ class pubService {
         const smsSign = "hisanlian";
         const templateId = 398377;
 
-        console.log(code, 'txVerificationCode')
-
         return new Promise((resolve, reject) => {
             ssender.sendWithParam(sendMsgInfo.nationcode, sendMsgInfo.mobile, templateId, params, smsSign, "", "", function callback(err, res, resData) {
                 if (err) {
                     console.log("err: ", err);
                     reject(err);
                 } else {
-                    console.log("request data: ", res.req);
-                    console.log("response data: ", resData);
                     resData.code = md5(code);
                     resolve(resData);
                 }

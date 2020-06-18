@@ -85,7 +85,6 @@ class MysqlController {
 
     async addProgressNodeAdd(ctx) {
         const returnData = await mysqlService.add(ctx)
-        console.log(returnData.affectedRows)
         if(returnData && returnData.affectedRows){
             ctx.body = {
                 code: 0,

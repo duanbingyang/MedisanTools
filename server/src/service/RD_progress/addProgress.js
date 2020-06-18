@@ -64,14 +64,11 @@ class MysqlService {
         }else{
             return false
         }
-        console.log(data)
-        console.log(sql)
         return getMysqlPoolData(sql)
     }
 
     async projectList(obj) {
         const sql = `SELECT * FROM ${mysqlTableName}`
-        console.log(sql)
         return getMysqlPoolData(sql)
     }
     
@@ -86,7 +83,6 @@ class MysqlService {
         // }
         const sqlData = this.ObjToSql(requestData)
         const sql = 'INSERT INTO ' + mysqlTableName + ' (' + sqlData.keyArr + ') VALUES ('  + sqlData.valueStr + ')'
-        console.log(sql)
         return getMysqlPoolData(sql)
     }
 
@@ -102,7 +98,6 @@ class MysqlService {
         }
         sql.keyArr = keyArr.toLocaleString()
         sql.valueStr = sql.valueStr.substring(0,sql.valueStr.length-1)
-        console.log(sql)
         return sql;
     }
 }

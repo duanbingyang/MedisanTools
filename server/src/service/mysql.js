@@ -136,7 +136,6 @@ class MysqlService {
     async remove() {
         return await mysqlConnection.query('SELECT * FROM test', function (error, results, fields) {
             if (error) throw error;
-            console.log('The solution is: ===================================', results);
             return results[0];
         });
     }
@@ -144,7 +143,6 @@ class MysqlService {
     async modify() {
         return await mysqlConnection.query('SELECT * FROM test', function (error, results, fields) {
             if (error) throw error;
-            console.log('The solution is: ===================================', results);
             return results[0];
         });
     }

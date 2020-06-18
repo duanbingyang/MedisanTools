@@ -20,12 +20,10 @@ class FileController {
         formUploader.putFile(uploadToken, key, localFile, putExtra, function (respErr,
             respBody, respInfo) {
             if (respErr) {
-                console.log('1===================')
                 console.log(respErr)
                 throw respErr;
             }
             if (respInfo.statusCode == 200) {
-                console.log('2===================')
                 console.log(respBody)
             } else {
                 console.log(respInfo.statusCode);

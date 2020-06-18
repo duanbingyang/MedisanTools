@@ -7,6 +7,7 @@ const pubController = require('./controller/public/pubController');
 const medisanCrmDB = require('./controller/medisanCrmDB');
 const RD_progress_add = require('./controller/RD_progress/addProgress');
 const RD_progress_node = require('./controller/RD_progress/progressList');
+const RD_progress_edit_code = require('./controller/RD_progress/editCode');
 
 module.exports = (router) => {
   router.prefix('/api');
@@ -36,4 +37,5 @@ module.exports = (router) => {
     .post('/editProgressNode', RD_progress_node.editProgressNode)
     .get('/selectProgressNodeUseId', RD_progress_node.selectProgressNodeUseId)
     .post('/auth', RD_progress_node.progressAudit)
+    .get('/editCode', RD_progress_edit_code.editCode)
 };

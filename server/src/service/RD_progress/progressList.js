@@ -52,18 +52,14 @@ class MysqlService {
     async progressAudit(obj) {
         const url = obj.request.url
         const data = obj.request.body
-        console.log(data)
         const sql = `UPDATE ${mysqlTableName} SET progressAudit=${data.progressAudit} WHERE id = ${data.id}`
-        console.log(sql)
         return getMysqlPoolData(sql)
     }
 
     async selectProgressNodeUseId(obj) {
         const url = obj.request.url
         const data = URL.parse(url, true).query
-        console.log(data)
         const sql = `SELECT * FROM ${mysqlTableName} WHERE id = ${data.id}`
-        console.log(sql)
         return getMysqlPoolData(sql)
     }
 
@@ -86,24 +82,19 @@ class MysqlService {
     async deleteProgressNodeUseId(obj) {
         const url = obj.request.url
         const data = obj.request.body
-        console.log(data)
         const sql = `DELETE FROM ${mysqlTableName} WHERE id = ${data.id}`
-        console.log(sql)
         return getMysqlPoolData(sql)
     }
 
     async progressNodeUseId(obj) {
         const url = obj.request.url
         const data = URL.parse(url, true).query
-        console.log(data)
         const sql = `SELECT * FROM ${mysqlTableName} WHERE projectId = ${data.id} ORDER BY progressId`
-        console.log(sql)
         return getMysqlPoolData(sql)
     }
 
     async progressNode(obj) {
         const sql = `SELECT * FROM ${mysqlTableName}`
-        console.log(sql)
         return getMysqlPoolData(sql)
     }
     
@@ -118,7 +109,6 @@ class MysqlService {
         // }
         const sqlData = this.ObjToSql(requestData)
         const sql = 'INSERT INTO ' + mysqlTableName + ' (' + sqlData.keyArr + ') VALUES ('  + sqlData.valueStr + ')'
-        console.log(sql)
         return getMysqlPoolData(sql)
     }
 
@@ -134,7 +124,6 @@ class MysqlService {
         }
         sql.keyArr = keyArr.toLocaleString()
         sql.valueStr = sql.valueStr.substring(0,sql.valueStr.length-1)
-        console.log(sql)
         return sql;
     }
 }

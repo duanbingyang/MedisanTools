@@ -119,9 +119,7 @@ class FileController {
             }
         }
         insertData = JSON.stringify(insertData).replace(/\[|\]/g, '')
-        console.log(insertData)
         const sql = `INSERT INTO ${mtsqlTableName} ( ${config.titleEN.toString()} ) VALUES ( ${insertData.toString()} );`
-        console.log(sql, '===============================')
         const result = await mysqlservice.insert({
             sql: sql
         })

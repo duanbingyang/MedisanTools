@@ -22,7 +22,6 @@ class FileService {
     async getBuffer (objectName) {
         try {
           let result = await client.get(objectName);
-          console.log(result.content);
           return result;
         } catch (e) {
           console.log(e);
