@@ -38,6 +38,24 @@ class MysqlController {
         // }
     }
 
+    async projectAudit(ctx) {
+        const returnData = await mysqlService.projectAudit(ctx)
+        console.log(returnData)
+        if(returnData && returnData.affectedRows){
+            ctx.body = {
+                code: 0,
+                data: returnData,
+                msg: '请求成功',
+            }
+        }else{
+            ctx.body = {
+                code: 109,
+                data: '',
+                msg: '请求失败，请检查sql语句',
+            }
+        }
+    }
+
     async addProgressApi(ctx) {
         const returnData = await mysqlService.add(ctx)
         console.log(returnData.affectedRows)

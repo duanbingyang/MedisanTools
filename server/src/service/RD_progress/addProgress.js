@@ -86,6 +86,13 @@ class MysqlService {
         return getMysqlPoolData(sql)
     }
 
+    async projectAudit(obj) {
+        const url = obj.request.url
+        const data = obj.request.body
+        const sql = `UPDATE ${mysqlTableName} SET audit=${data.projectAudit} WHERE id = ${data.id}`
+        return getMysqlPoolData(sql)
+    }
+
     ObjToSql(obj) {
         const sql = {
             keyArr: '',

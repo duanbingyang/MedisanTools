@@ -52,7 +52,7 @@ class MysqlService {
     async progressAudit(obj) {
         const url = obj.request.url
         const data = obj.request.body
-        const sql = `UPDATE ${mysqlTableName} SET progressAudit=${data.progressAudit} WHERE id = ${data.id}`
+        const sql = `UPDATE ${mysqlTableName} SET progressAudit=${data.progressAudit}, progressEdit=${!data.progressAudit} WHERE id = ${data.id}`
         return getMysqlPoolData(sql)
     }
 
